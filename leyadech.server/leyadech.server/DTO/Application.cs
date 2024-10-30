@@ -7,7 +7,8 @@
         public EHelpKind HelpKind { get; set; }
         public string Description { get; set; }
         public DateTime ApplicationDate { get; set; }
-      
+        public bool IsRelevant { get; set; }
+
 
 
     }
