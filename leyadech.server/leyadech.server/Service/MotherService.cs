@@ -50,6 +50,7 @@ namespace leyadech.server.Service
             Mother mother = GetMotherById(id);
             if (mother == default(Mother)) return false;
             mother.SpecialRequests.Add(request);
+            return true;
         }
      
     }

@@ -47,7 +47,9 @@ namespace leyadech.server.Service
         }
         public List<Volunteering> GetAllVolunteeringsById(int id)
         {
-            //pass
+            VolunteeringService volunteeringService = new VolunteeringService();
+            return volunteeringService.GetAllVolunteerings()
+                .Where(vol=>vol.VolunteerId==id).ToList();
         }
     }
 }

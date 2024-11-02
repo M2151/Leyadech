@@ -9,12 +9,13 @@ namespace leyadech.server.Service
         public List<Volunteering> GetAllVolunteerings() => _allVolunteerings;
         public Volunteering GetVolunteeringById(int id) 
         {
-            return _allVolunteerings.Where(vol => vol.Id == id)
+            return _allVolunteerings.Where(vol => vol.VolunteeringId == id)
                 .FirstOrDefault<Volunteering>();
         }
         public bool AddVolunteering(Volunteering vol) 
         {
             vol.VolunteeringId=_allVolunteerings.Max(v=>v.VolunteeringId)+1;
+            return true;
         }
         public void SetVolunteeringFields(Volunteering orig,Volunteering newVo)
         {
@@ -26,6 +27,7 @@ namespace leyadech.server.Service
             if(original == default(Volunteering))
                 return false;
             SetVolunteeringFields(original, vol);
+            return true;
         }
         public bool DeleteVolunteering(int id) 
         {
@@ -33,6 +35,7 @@ namespace leyadech.server.Service
             if (volunteering == default(Volunteering))
                 return false;
             _allVolunteerings.Remove(volunteering);
+            return true;
         }
         public bool AddFeedback(int id,int satisfactionLevel, string feedback) 
         {
