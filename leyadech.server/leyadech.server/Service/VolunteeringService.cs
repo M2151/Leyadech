@@ -5,7 +5,12 @@ namespace leyadech.server.Service
 {
     public class VolunteeringService
     {
+
         List<Volunteering> _allVolunteerings;
+        public VolunteeringService()
+        {
+            _allVolunteerings = new List<Volunteering>();
+        }
         public List<Volunteering> GetAllVolunteerings() => _allVolunteerings;
         public Volunteering GetVolunteeringById(int id) 
         {
