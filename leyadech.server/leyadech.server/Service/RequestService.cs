@@ -5,6 +5,10 @@ namespace leyadech.server.Service
     public class RequestService
     {
         List<HelpRequest> _allRequests;
+        public RequestService()
+        {
+            _allRequests = new List<HelpRequest>();
+        }
         public List<HelpRequest> GetAllRequests() => _allRequests;
         public List<HelpRequest> GetAllRelevantRequests() 
         {

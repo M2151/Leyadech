@@ -5,6 +5,10 @@ namespace leyadech.server.Service
     public class SuggestService
     {
         List<HelpSuggest> _allSuggests;
+        public SuggestService()
+        {
+            _allSuggests = new List<HelpSuggest>();
+        }
         public List<HelpSuggest> GetAllSuggests() => _allSuggests;
         public List<HelpSuggest> GetAllRelevantSuggests()
         {

@@ -5,6 +5,10 @@ namespace leyadech.server.Service
     public class MotherService
     {
         List<Mother> _allMothers;
+        public MotherService()
+        {
+            _allMothers = new List<Mother>();
+        }
         public List<Mother> GetAllMothers()
         { 
             return _allMothers;
