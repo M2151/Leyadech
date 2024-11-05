@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace leyadech.server.Controllers
 {
-    [Controller]
-    [Route("volunteerings")]
+    [ApiController]
+    [Route("[controller]")]
     public class VolunteeringController : Controller
     {
         readonly VolunteeringService _volunteeringService;
@@ -23,36 +23,36 @@ namespace leyadech.server.Controllers
         public ActionResult<Volunteering> Get(int id)
         {
             Volunteering result = _volunteeringService.GetVolunteeringById(id);
-            if (result == null) return Unauthorized();
+            if (result == null) return NotFound();
             return result;
         }
         [HttpPost]
-        public ActionResult Add([FromBody]Volunteering volunteering)
+        public ActionResult<bool> Add([FromBody]Volunteering volunteering)
         {
             bool result = _volunteeringService.AddVolunteering(volunteering);
-            if (!result) return Unauthorized();
+            if (!result) return NotFound();
             return Ok();
         }
         [HttpPut("{id}")]
-        public ActionResult Update(int id, [FromBody] Volunteering volunteering)
+        public ActionResult<bool> Update(int id, [FromBody] Volunteering volunteering)
         {
             bool result=_volunteeringService.UpdateVolunteering(id, volunteering);
-            if (!result) return Unauthorized();
-            return Ok();
+            if (!result) return NotFound();
+            return true;
         }
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public ActionResult<bool> Delete(int id)
         {
             bool result=_volunteeringService.DeleteVolunteering(id);
-            if (!result) return Unauthorized();
-            return Ok();
+            if (!result) return NotFound();
+            return true;
         }
         [HttpPut("{id}/feedback")]
-        public ActionResult AddFeedback(int id,[FromBody]int satisfactionLevel,[FromBody]string feedback)
+        public ActionResult<bool> AddFeedback(int id,[FromBody]int satisfactionLevel,[FromBody]string feedback)
         {
             bool result = _volunteeringService.AddFeedback(id,satisfactionLevel,feedback);
-            if (!result) return Unauthorized();
-            return Ok();
+            if (!result) return NotFound();
+            return true;
         }
 
         
