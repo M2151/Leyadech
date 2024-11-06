@@ -6,20 +6,31 @@ namespace leyadech.server.Service
     public class VolunteeringService
     {
 
-        List<Volunteering> _allVolunteerings;
-        public VolunteeringService()
-        {
-            _allVolunteerings = new List<Volunteering>();
-        }
-        public List<Volunteering> GetAllVolunteerings() => _allVolunteerings;
+       
+        public List<Volunteering> GetAllVolunteerings() => DataContextManage.Lists.AllVolunteerings;
         public Volunteering GetVolunteeringById(int id) 
         {
-            return _allVolunteerings.Where(vol => vol.VolunteeringId == id)
+            return DataContextManage.Lists.AllVolunteerings.Where(vol => vol.VolunteeringId == id)
                 .FirstOrDefault<Volunteering>();
+        }
+        public bool IsValidFields(Volunteering vol)
+        {
+            SuggestService suggestService = new SuggestService();
+            RequestService requestService = new RequestService();
+            if (suggestService.GetSuggestById(vol.SuggestId) == null)
+                return false;
+            if (requestService.GetRequestById(vol.RequestId) == null)
+                return false;
+            if (vol.DateEnd < vol.DateStart)
+                return false;
+            if (vol.TimeEnd < vol.TimeStart)
+                return false;
+            return true;
         }
         public bool AddVolunteering(Volunteering vol) 
         {
-            vol.VolunteeringId=_allVolunteerings.Max(v=>v.VolunteeringId)+1;
+            if(!IsValidFields(vol)) return false;
+            vol.VolunteeringId= DataContextManage.Lists.AllVolunteerings.Max(v=>v.VolunteeringId)+1;
             return true;
         }
         public void SetVolunteeringFields(Volunteering orig,Volunteering newVo)
@@ -27,7 +38,8 @@ namespace leyadech.server.Service
 
         }
         public bool UpdateVolunteering(int id, Volunteering vol) 
-        { 
+        {
+            if (!IsValidFields(vol)) return false;
             Volunteering original = GetVolunteeringById(id);
             if(original == default(Volunteering))
                 return false;
@@ -39,16 +51,16 @@ namespace leyadech.server.Service
             Volunteering volunteering = GetVolunteeringById(id);
             if (volunteering == default(Volunteering))
                 return false;
-            _allVolunteerings.Remove(volunteering);
+            DataContextManage.Lists.AllVolunteerings.Remove(volunteering);
             return true;
         }
-        public bool AddFeedback(int id,int satisfactionLevel, string feedback) 
+        
+        public bool AddFeedback(int id,Feedback feedback) 
         {
             Volunteering volunteering = GetVolunteeringById(id);
             if (volunteering == default(Volunteering))
                 return false;
             volunteering.Feedback = feedback;
-            volunteering.SatisfactionLevel = satisfactionLevel;
             return true;
         }
     }

@@ -4,23 +4,19 @@ namespace leyadech.server.Service
 {
     public class VolunteerService
     {
-        List<Volunteer> _allVolunteers;
-        public VolunteerService()
-        {
-            _allVolunteers= new List<Volunteer>();
-        }
+        
         public List<Volunteer> GetAllVolunteers()
         {
-            return _allVolunteers;
+            return DataContextManage.Lists.AllVolunteers;
         }
         public Volunteer GetVolunteerById(int id)
         {
-            return _allVolunteers.Where(v => v.Id == id).FirstOrDefault<Volunteer>();
+            return DataContextManage.Lists.AllVolunteers.Where(v => v.Id == id).FirstOrDefault<Volunteer>();
         }
         public bool AddVolunteer(Volunteer volunteer)
         {
-            volunteer.Id = _allVolunteers.Max(v => v.Id) + 1;
-            _allVolunteers.Add(volunteer); return true;
+            volunteer.Id = DataContextManage.Lists.AllVolunteers.Max(v => v.Id) + 1;
+            DataContextManage.Lists.AllVolunteers.Add(volunteer); return true;
         }
         public void SetVolunteerFields(Volunteer originalVol, Volunteer newVol)
         {
@@ -52,8 +48,10 @@ namespace leyadech.server.Service
         public List<Volunteering> GetAllVolunteeringsById(int id)
         {
             VolunteeringService volunteeringService = new VolunteeringService();
+            SuggestService suggestService = new SuggestService();
             return volunteeringService.GetAllVolunteerings()
-                .Where(vol=>vol.VolunteerId==id).ToList();
+                .Where(vol=> suggestService.GetSuggestById(vol.SuggestId).UserId==id)
+                .ToList();
         }
     }
 }

@@ -125,8 +125,6 @@ GET <a href="http://leyadech.co.il/suggests/?volunteer=1">http://leyadech.co.il/
 •	תיאור<br>
 •	סוג סיוע<br>
 •	תדירות -enum<br>
-•	מזהה יולדת<br>
-•	מזהה מתנדבת<br>
 •	תאריך התחלת התנדבות<br>
 •	תאריך סיום התנדבות<br>
 •	שעת התחלת התנדבות<br>

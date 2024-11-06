@@ -4,19 +4,15 @@ namespace leyadech.server.Service
 {
     public class RequestService
     {
-        List<HelpRequest> _allRequests;
-        public RequestService()
-        {
-            _allRequests = new List<HelpRequest>();
-        }
-        public List<HelpRequest> GetAllRequests() => _allRequests;
+        
+        public List<HelpRequest> GetAllRequests() => DataContextManage.Lists.AllRequests;
         public List<HelpRequest> GetAllRelevantRequests() 
         {
-            return _allRequests.Where(req => req.IsRelevant).ToList();
+            return DataContextManage.Lists.AllRequests.Where(req => req.IsRelevant).ToList();
         }
         public HelpRequest GetRequestById(int id) 
         {
-            return _allRequests.Find(req=>req.ApplicationId == id);
+            return DataContextManage.Lists.AllRequests.Find(req=>req.ApplicationId == id);
         }
         public bool SetRequest(HelpRequest original,HelpRequest newReq) 
         {
@@ -41,12 +37,12 @@ namespace leyadech.server.Service
         { 
             HelpRequest req= GetRequestById(id);
             if(req==null)return false;
-            _allRequests.Remove(req);
+            DataContextManage.Lists.AllRequests.Remove(req);
             return true;
         }
         public bool AddRequest(HelpRequest request) 
-        { 
-            _allRequests.Add(request);
+        {
+            DataContextManage.Lists.AllRequests.Add(request);
             return true;
         }
         public List<HelpRequest> GetReqByMotherId(int motherId)

@@ -4,19 +4,15 @@ namespace leyadech.server.Service
 {
     public class SuggestService
     {
-        List<HelpSuggest> _allSuggests;
-        public SuggestService()
-        {
-            _allSuggests = new List<HelpSuggest>();
-        }
-        public List<HelpSuggest> GetAllSuggests() => _allSuggests;
+     
+        public List<HelpSuggest> GetAllSuggests() => DataContextManage.Lists.AllSuggests;
         public List<HelpSuggest> GetAllRelevantSuggests()
         {
-            return _allSuggests.Where(seg => seg.IsRelevant).ToList();
+            return DataContextManage.Lists.AllSuggests.Where(seg => seg.IsRelevant).ToList();
         }
         public HelpSuggest GetSuggestById(int id)
         {
-            return _allSuggests.Find(sug => sug.ApplicationId == id);
+            return DataContextManage.Lists.AllSuggests.Find(sug => sug.ApplicationId == id);
         }
         public bool SetSuggest(HelpSuggest original, HelpSuggest newSug)
         {
@@ -42,12 +38,12 @@ namespace leyadech.server.Service
         {
             HelpSuggest sug = GetSuggestById(id);
             if (sug == null) return false;
-            _allSuggests.Remove(sug);
+            DataContextManage.Lists.AllSuggests.Remove(sug);
             return true;
         }
         public bool AddSuggest(HelpSuggest suggest)
         {
-            _allSuggests.Add(suggest);
+            DataContextManage.Lists.AllSuggests.Add(suggest);
             return true;
         }
         public List<HelpSuggest> GetSegByVolId(int volId)

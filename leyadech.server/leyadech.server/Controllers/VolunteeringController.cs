@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace leyadech.server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class VolunteeringController : Controller
     {
         readonly VolunteeringService _volunteeringService;
@@ -29,13 +29,15 @@ namespace leyadech.server.Controllers
         [HttpPost]
         public ActionResult<bool> Add([FromBody]Volunteering volunteering)
         {
+            if (!_volunteeringService.IsValidFields(volunteering)) return BadRequest();
             bool result = _volunteeringService.AddVolunteering(volunteering);
-            if (!result) return NotFound();
-            return Ok();
+            if (!result) return Unauthorized();
+            return true;
         }
         [HttpPut("{id}")]
         public ActionResult<bool> Update(int id, [FromBody] Volunteering volunteering)
         {
+            if(!_volunteeringService.IsValidFields(volunteering)) return BadRequest();
             bool result=_volunteeringService.UpdateVolunteering(id, volunteering);
             if (!result) return NotFound();
             return true;
@@ -48,9 +50,9 @@ namespace leyadech.server.Controllers
             return true;
         }
         [HttpPut("{id}/feedback")]
-        public ActionResult<bool> AddFeedback(int id,[FromBody]int satisfactionLevel,[FromBody]string feedback)
+        public ActionResult<bool> AddFeedback(int id,[FromBody]Feedback feedback)
         {
-            bool result = _volunteeringService.AddFeedback(id,satisfactionLevel,feedback);
+            bool result = _volunteeringService.AddFeedback(id,feedback);
             if (!result) return NotFound();
             return true;
         }

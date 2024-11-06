@@ -9,14 +9,12 @@
         public string Description { get; set; }
         public EHelpKind HelpKind { get; set; }
         public EFrequency HelpFrequency { get; set; }
-        public int MotherId { get; set; }
-        public int VolunteerId { get; set; }
         public DateOnly DateStart { get; set; }
         public DateOnly DateEnd { get; set; }
         public TimeOnly TimeStart { get; set; }
         public TimeOnly TimeEnd { get; set; }
         public int SatisfactionLevel { get; set; }
-        public string Feedback { get; set; }
+        public Feedback Feedback { get; set; }
 
     }
 }

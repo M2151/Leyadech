@@ -4,23 +4,20 @@ namespace leyadech.server.Service
 {
     public class MotherService
     {
-        List<Mother> _allMothers;
-        public MotherService()
-        {
-            _allMothers = new List<Mother>();
-        }
+      
         public List<Mother> GetAllMothers()
         { 
-            return _allMothers;
+            return DataContextManage.Lists.AllMothers;
+            
         }
         public Mother GetMotherById(int id) 
         { 
-            return _allMothers.Where(m=>m.Id == id).FirstOrDefault<Mother>();
+            return DataContextManage.Lists.AllMothers.Where(m=>m.Id == id).FirstOrDefault<Mother>();
         }
         public bool AddMother(Mother mother)
         {
-            mother.Id=_allMothers.Max(mother=> mother.Id)+1;
-            _allMothers.Add(mother); return true;
+            mother.Id= DataContextManage.Lists.AllMothers.Max(mother=> mother.Id)+1;
+            DataContextManage.Lists.AllMothers.Add(mother); return true;
         }
         public void SetMotherFields(Mother originalMo,Mother newMo)
         {
@@ -46,7 +43,7 @@ namespace leyadech.server.Service
         { 
             Mother mother = GetMotherById(id);
             if(mother==default(Mother)) return false;
-            _allMothers.Remove(mother);
+            DataContextManage.Lists.AllMothers.Remove(mother);
             return true;
         }
         public bool AddSpecialRequest(int id,string request)
