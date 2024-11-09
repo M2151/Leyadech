@@ -15,6 +15,7 @@ namespace leyadech.server.Service
         }
         public bool IsValidFields(Volunteering vol)
         {
+            if(vol==null) return false;
             SuggestService suggestService = new SuggestService();
             RequestService requestService = new RequestService();
             if (suggestService.GetSuggestById(vol.SuggestId) == null)
@@ -35,7 +36,16 @@ namespace leyadech.server.Service
         }
         public void SetVolunteeringFields(Volunteering orig,Volunteering newVo)
         {
-
+            orig.Feedback= newVo.Feedback;
+            orig.HelpFrequency= newVo.HelpFrequency;
+            orig.TimeEnd= newVo.TimeEnd;
+            orig.TimeStart= newVo.TimeStart;
+            orig.DateStart= newVo.DateStart;
+            orig.DateEnd= newVo.DateEnd;
+            orig.Description= newVo.Description;
+            orig.HelpKind= newVo.HelpKind;
+            orig.RequestId= newVo.RequestId;
+            orig.SuggestId= newVo.SuggestId;
         }
         public bool UpdateVolunteering(int id, Volunteering vol) 
         {

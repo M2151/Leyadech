@@ -24,14 +24,13 @@ namespace leyadech.server.Controllers
         {
             Volunteering result = _volunteeringService.GetVolunteeringById(id);
             if (result == null) return NotFound();
-            return result;
+            return Ok(result);
         }
         [HttpPost]
         public ActionResult<bool> Add([FromBody]Volunteering volunteering)
         {
-            if (!_volunteeringService.IsValidFields(volunteering)) return BadRequest();
             bool result = _volunteeringService.AddVolunteering(volunteering);
-            if (!result) return Unauthorized();
+            if (!result) return BadRequest();
             return true;
         }
         [HttpPut("{id}")]
@@ -52,6 +51,7 @@ namespace leyadech.server.Controllers
         [HttpPut("{id}/feedback")]
         public ActionResult<bool> AddFeedback(int id,[FromBody]Feedback feedback)
         {
+            if(feedback == null) return BadRequest();
             bool result = _volunteeringService.AddFeedback(id,feedback);
             if (!result) return NotFound();
             return true;

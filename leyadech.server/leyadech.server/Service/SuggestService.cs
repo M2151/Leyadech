@@ -34,6 +34,14 @@ namespace leyadech.server.Service
             return SetSuggest(original, suggest);
 
         }
+        public bool IsValidFields(HelpSuggest suggest)
+        {
+            if (suggest == null) return false;
+            VolunteerService volunteerService = new VolunteerService();
+            Volunteer volunteer = volunteerService.GetVolunteerById(suggest.UserId);
+            if (volunteer == null) return false;
+            return true;
+        }
         public bool DeleteSuggest(int id)
         {
             HelpSuggest sug = GetSuggestById(id);
@@ -43,6 +51,7 @@ namespace leyadech.server.Service
         }
         public bool AddSuggest(HelpSuggest suggest)
         {
+            if (!IsValidFields(suggest)) return false;
             DataContextManage.Lists.AllSuggests.Add(suggest);
             return true;
         }

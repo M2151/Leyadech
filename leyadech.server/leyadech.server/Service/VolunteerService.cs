@@ -2,7 +2,7 @@
 
 namespace leyadech.server.Service
 {
-    public class VolunteerService
+    public class VolunteerService:UserService
     {
         
         public List<Volunteer> GetAllVolunteers()
@@ -15,12 +15,26 @@ namespace leyadech.server.Service
         }
         public bool AddVolunteer(Volunteer volunteer)
         {
+            if(!IsValidFields(volunteer)) return false;
             volunteer.Id = DataContextManage.Lists.AllVolunteers.Max(v => v.Id) + 1;
             DataContextManage.Lists.AllVolunteers.Add(volunteer); return true;
         }
         public void SetVolunteerFields(Volunteer originalVol, Volunteer newVol)
         {
-
+            originalVol.Email = newVol.Email;
+            originalVol.FirstName = newVol.FirstName;
+            originalVol.LastName = newVol.LastName;
+            originalVol.PhoneNumber= newVol.PhoneNumber;
+            originalVol.Address= newVol.Address;
+            originalVol.HelpKindSuggested = newVol.HelpKindSuggested;
+            originalVol.Status = newVol.Status;
+            
+        }
+        public bool IsValidFields(Volunteer volunteer)
+        {
+            if(!IsvalidEmail(volunteer.Email))return false;
+            if(!IsValidPhone(volunteer.PhoneNumber))return false;
+            return true;
         }
         public bool UpdateVolunteerFields(int id, Volunteer volunteer)
         {

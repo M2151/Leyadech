@@ -2,7 +2,7 @@
 
 namespace leyadech.server.Service
 {
-    public class MotherService
+    public class MotherService:UserService
     {
       
         public List<Mother> GetAllMothers()
@@ -12,16 +12,50 @@ namespace leyadech.server.Service
         }
         public Mother GetMotherById(int id) 
         { 
-            return DataContextManage.Lists.AllMothers.Where(m=>m.Id == id).FirstOrDefault<Mother>();
+            return DataContextManage.Lists.AllMothers.Find(m=>m.Id == id);
+        }
+        public void SetMotherStatus(Mother mother)
+        {
+            DateOnly today = DateOnly.FromDateTime(DateTime.Today);
+            if (mother.BirthDate.AddMonths(1) > today)
+                mother.Status = EMoterStatus.WeekAfterBirth;
+            else if (mother.BirthDate.AddMonths(2) > today)
+                mother.Status = EMoterStatus.MonthAfterBirth;
+            else if (mother.BirthDate.AddMonths(4) > today)
+                mother.Status = EMoterStatus.LongAfterBirth;
         }
         public bool AddMother(Mother mother)
         {
+            if(!IsValidFields(mother)) return false;
             mother.Id= DataContextManage.Lists.AllMothers.Max(mother=> mother.Id)+1;
-            DataContextManage.Lists.AllMothers.Add(mother); return true;
+            SetMotherStatus(mother);
+            DataContextManage.Lists.AllMothers.Add(mother); 
+            return true;
         }
         public void SetMotherFields(Mother originalMo,Mother newMo)
         {
+            originalMo.Address = newMo.Address;
+            originalMo.Email = newMo.Email; 
+            originalMo.FirstName = newMo.FirstName;
+            originalMo.LastName = newMo.LastName;
+            originalMo.ChildrenBelow7 = newMo.ChildrenBelow7;
+            originalMo.FamilySize = newMo.FamilySize;
+            originalMo.PhoneNumber = newMo.PhoneNumber;
+            originalMo.HelpKindNeeded = newMo.HelpKindNeeded;
+            originalMo.IsStandingOrder = newMo.IsStandingOrder;
 
+        }
+       
+        public bool IsValidFields(Mother mother)
+        {
+            if (mother == null) return false;
+            DateOnly today = DateOnly.FromDateTime(DateTime.Today);
+            if (mother.JoinDate>today)return false;
+            if (mother.BirthDate > today) return false;
+            if(mother.ChildrenBelow7>mother.FamilySize) return false;
+            if(!IsvalidEmail(mother.Email)) return false;
+            if(!IsValidPhone(mother.PhoneNumber)) return false;
+            return true;
         }
         public bool UpdateMotherFields(int id, Mother mother) 
         { 
@@ -31,14 +65,7 @@ namespace leyadech.server.Service
             SetMotherFields(original, mother);
             return true;
         }
-        public bool UpdateMotherStatus(int id,EMoterStatus status)
-        {
-            Mother mother = GetMotherById(id);
-            if (mother == default(Mother))
-                return false;
-            mother.Status = status;
-            return true;
-        }
+        
         public bool DeleteMother(int id) 
         { 
             Mother mother = GetMotherById(id);

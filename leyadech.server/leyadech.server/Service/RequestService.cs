@@ -14,9 +14,17 @@ namespace leyadech.server.Service
         {
             return DataContextManage.Lists.AllRequests.Find(req=>req.ApplicationId == id);
         }
-        public bool SetRequest(HelpRequest original,HelpRequest newReq) 
+        public bool IsValidFields(HelpRequest request)
         {
-            if(newReq==null)return false;
+            if (request == null) return false;
+            MotherService motherService = new MotherService();
+            Mother mother = motherService.GetMotherById(request.UserId);
+            if (mother == null) return false;
+            return true;
+        }
+        public void SetRequest(HelpRequest original,HelpRequest newReq) 
+        {
+            
             original.UserId = newReq.UserId;
             original.Frequency = newReq.Frequency;
             original.UrgencyLevel = newReq.UrgencyLevel;
@@ -24,14 +32,14 @@ namespace leyadech.server.Service
             original.Description = newReq.Description;
             original.HelpKind = newReq.HelpKind;
             original.Preferences = newReq.Preferences;
-            return true;
+          
         }
         public bool UpdateRequest(int id, HelpRequest request) 
         { 
             HelpRequest original= GetRequestById(id);
-            if(original==null)return false;
-            return SetRequest(original,request);
-
+            if(original==null) return false;
+            SetRequest(original,request);
+            return true;
         }
         public bool DeleteRequest(int id) 
         { 
@@ -42,6 +50,7 @@ namespace leyadech.server.Service
         }
         public bool AddRequest(HelpRequest request) 
         {
+            if(!IsValidFields(request)) return false;
             DataContextManage.Lists.AllRequests.Add(request);
             return true;
         }
