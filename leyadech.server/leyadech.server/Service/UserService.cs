@@ -1,4 +1,6 @@
-﻿namespace leyadech.server.Service
+﻿using System.Text.RegularExpressions;
+
+namespace leyadech.server.Service
 {
     public class UserService
     {
@@ -26,16 +28,8 @@
         {
             if (phone == null) return true;
             string trimmedPhone = phone.Trim();
-            foreach (char digit in trimmedPhone)
-                if (!char.IsDigit(digit)) return false;
-            if (trimmedPhone[0] != '0') return false;
-            switch (trimmedPhone[1])
-            {
-                case '5': return trimmedPhone.Length == 10;
-                case '7': return trimmedPhone.Length == 10;
-                case '8': return trimmedPhone.Length == 9;
-                default: return false;
-            }
+            string pattern = @"^0(5\d{8}|7\d{8}|8\d{7})$";
+            return Regex.IsMatch(trimmedPhone, pattern);
 
         }
     }

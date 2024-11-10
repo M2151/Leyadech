@@ -17,7 +17,7 @@ namespace leyadech.server.Controllers
         [HttpGet]
         public ActionResult<List<Volunteering>> Get()
         {
-            return _volunteeringService.GetAllVolunteerings();
+            return Ok(_volunteeringService.GetAllVolunteerings());
         }
         [HttpGet("{id}")]
         public ActionResult<Volunteering> Get(int id)
@@ -27,11 +27,11 @@ namespace leyadech.server.Controllers
             return Ok(result);
         }
         [HttpPost]
-        public ActionResult<bool> Add([FromBody]Volunteering volunteering)
+        public ActionResult Add([FromBody]Volunteering volunteering)
         {
             bool result = _volunteeringService.AddVolunteering(volunteering);
             if (!result) return BadRequest();
-            return true;
+            return Ok();
         }
         [HttpPut("{id}")]
         public ActionResult<bool> Update(int id, [FromBody] Volunteering volunteering)

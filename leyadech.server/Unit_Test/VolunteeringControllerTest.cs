@@ -1,4 +1,5 @@
 ﻿using leyadech.server.Controllers;
+using leyadech.server.DTO;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,15 @@ namespace Unit_Test
             var id = 1;
             var vol = _volunteeringController.Get(id);
             Assert.IsType<OkObjectResult>(vol);
+        }
+        [Fact]
+        public void Add_ReturnsBadRequest_NotValidDate()
+        {
+            var today= DateOnly.FromDateTime(DateTime.Now);
+            var tommorow=today.AddDays(1);
+            var vol = new Volunteering() {DateStart=tommorow,DateEnd=today};
+            var res=_volunteeringController.Add(vol);
+            Assert.IsType<BadRequestResult>(res);
         }
 
     }
