@@ -4,20 +4,29 @@ namespace leyadech.server.Service
 {
     public class VolunteerService:UserService
     {
-        
+        readonly IDataContext _dataContext;
+        readonly SuggestService _suggestService;
+        readonly VolunteeringService _volunteeringService;
+        public VolunteerService(IDataContext dataContext,VolunteeringService volunteeringService,SuggestService suggestService)
+        {
+            _dataContext = dataContext;
+            _dataContext.LoadVolunteerData();
+            _suggestService = suggestService;
+            _volunteeringService = volunteeringService;
+        }
         public List<Volunteer> GetAllVolunteers()
         {
-            return DataContextManage.Lists.AllVolunteers;
+            return _dataContext.VolunteerData;
         }
         public Volunteer GetVolunteerById(int id)
         {
-            return DataContextManage.Lists.AllVolunteers.Where(v => v.Id == id).FirstOrDefault<Volunteer>();
+            return _dataContext.VolunteerData.Where(v => v.Id == id).FirstOrDefault<Volunteer>();
         }
         public bool AddVolunteer(Volunteer volunteer)
         {
-            if(!IsValidFields(volunteer)) return false;
-            volunteer.Id = DataContextManage.Lists.AllVolunteers.Max(v => v.Id) + 1;
-            DataContextManage.Lists.AllVolunteers.Add(volunteer); return true;
+            volunteer.Id = _dataContext.VolunteerData.Max(v => v.Id) + 1;
+            _dataContext.VolunteerData.Add(volunteer);
+            return _dataContext.SaveVolunteerData();
         }
         public void SetVolunteerFields(Volunteer originalVol, Volunteer newVol)
         {
@@ -42,7 +51,7 @@ namespace leyadech.server.Service
             if (original == default(Volunteer))
                 return false;
             SetVolunteerFields(original, volunteer);
-            return true;
+            return _dataContext.SaveVolunteerData();
         }
         //public bool DeleteVolunteer(int id)
         //{
@@ -57,14 +66,12 @@ namespace leyadech.server.Service
             if (volunteer == default(Volunteer))
                 return false;
             volunteer.Status = status;
-            return true;
+            return _dataContext.SaveVolunteerData();
         }
         public List<Volunteering> GetAllVolunteeringsById(int id)
         {
-            VolunteeringService volunteeringService = new VolunteeringService();
-            SuggestService suggestService = new SuggestService();
-            return volunteeringService.GetAllVolunteerings()
-                .Where(vol=> suggestService.GetSuggestById(vol.SuggestId).UserId==id)
+            return _volunteeringService.GetAllVolunteerings()
+                .Where(vol=> _suggestService.GetSuggestById(vol.SuggestId).UserId==id)
                 .ToList();
         }
     }

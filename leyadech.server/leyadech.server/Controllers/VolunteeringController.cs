@@ -24,14 +24,16 @@ namespace leyadech.server.Controllers
         {
             Volunteering result = _volunteeringService.GetVolunteeringById(id);
             if (result == null) return NotFound();
-            return Ok(result);
+            return result;
         }
         [HttpPost]
-        public ActionResult Add([FromBody]Volunteering volunteering)
+        public ActionResult<bool> Add([FromBody]Volunteering volunteering)
         {
+            if(!_volunteeringService.IsValidFields(volunteering)) 
+                return BadRequest();
             bool result = _volunteeringService.AddVolunteering(volunteering);
             if (!result) return BadRequest();
-            return Ok();
+            return true;
         }
         [HttpPut("{id}")]
         public ActionResult<bool> Update(int id, [FromBody] Volunteering volunteering)

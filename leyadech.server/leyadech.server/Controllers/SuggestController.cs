@@ -47,6 +47,7 @@ namespace leyadech.server.Controllers
         [HttpPost]
         public ActionResult<bool> Add([FromBody] HelpSuggest suggest)
         {
+            if (!_suggestService.IsValidFields(suggest)) return false;
             bool result = _suggestService.AddSuggest(suggest);
             if (!result)
                 return BadRequest();

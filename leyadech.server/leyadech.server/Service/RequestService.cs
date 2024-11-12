@@ -4,21 +4,27 @@ namespace leyadech.server.Service
 {
     public class RequestService
     {
-        
+        readonly IDataContext _dataContext;
+        readonly MotherService _motherService;
+        public RequestService(IDataContext dataContext,MotherService motherService)
+        {
+            _dataContext = dataContext;
+            _dataContext.LoadRequestData();
+            _motherService = motherService;
+        }
         public List<HelpRequest> GetAllRequests() => DataContextManage.Lists.AllRequests;
         public List<HelpRequest> GetAllRelevantRequests() 
         {
-            return DataContextManage.Lists.AllRequests.Where(req => req.IsRelevant).ToList();
+            return _dataContext.RequestData.Where(req => req.IsRelevant).ToList();
         }
         public HelpRequest GetRequestById(int id) 
         {
-            return DataContextManage.Lists.AllRequests.Find(req=>req.ApplicationId == id);
+            return _dataContext.RequestData.Find(req=>req.ApplicationId == id);
         }
         public bool IsValidFields(HelpRequest request)
         {
             if (request == null) return false;
-            MotherService motherService = new MotherService();
-            Mother mother = motherService.GetMotherById(request.UserId);
+            Mother mother = _motherService.GetMotherById(request.UserId);
             if (mother == null) return false;
             return true;
         }
@@ -39,20 +45,20 @@ namespace leyadech.server.Service
             HelpRequest original= GetRequestById(id);
             if(original==null) return false;
             SetRequest(original,request);
-            return true;
+            return _dataContext.SaveRequestData();
         }
         public bool DeleteRequest(int id) 
         { 
             HelpRequest req= GetRequestById(id);
             if(req==null)return false;
-            DataContextManage.Lists.AllRequests.Remove(req);
-            return true;
+            _dataContext.RequestData.Remove(req);
+            return _dataContext.SaveRequestData();
         }
         public bool AddRequest(HelpRequest request) 
         {
             if(!IsValidFields(request)) return false;
-            DataContextManage.Lists.AllRequests.Add(request);
-            return true;
+            _dataContext.RequestData.Add(request);
+            return _dataContext.SaveRequestData();
         }
         public List<HelpRequest> GetReqByMotherId(int motherId)
         {

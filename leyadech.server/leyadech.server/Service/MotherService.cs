@@ -4,15 +4,20 @@ namespace leyadech.server.Service
 {
     public class MotherService:UserService
     {
-      
+        readonly IDataContext _dataContext;
+        public MotherService(IDataContext dataContext)
+        {
+            _dataContext = dataContext;
+            _dataContext.LoadMotherData();
+        }
         public List<Mother> GetAllMothers()
-        { 
-            return DataContextManage.Lists.AllMothers;
+        {
+            return _dataContext.MotherData;
             
         }
         public Mother GetMotherById(int id) 
         { 
-            return DataContextManage.Lists.AllMothers.Find(m=>m.Id == id);
+            return _dataContext.MotherData.Find(m=>m.Id == id);
         }
         public void SetMotherStatus(Mother mother)
         {
@@ -26,11 +31,12 @@ namespace leyadech.server.Service
         }
         public bool AddMother(Mother mother)
         {
-            if(!IsValidFields(mother)) return false;
-            mother.Id= DataContextManage.Lists.AllMothers.Max(mother=> mother.Id)+1;
+            
+            if (!IsValidFields(mother)) return false;
+            mother.Id= _dataContext.MotherData.Max(mother=> mother.Id)+1;
             SetMotherStatus(mother);
-            DataContextManage.Lists.AllMothers.Add(mother); 
-            return true;
+            _dataContext.MotherData.Add(mother); 
+            return _dataContext.SaveMotherData();
         }
         public void SetMotherFields(Mother originalMo,Mother newMo)
         {
@@ -63,22 +69,22 @@ namespace leyadech.server.Service
             if(original==default(Mother)) 
                 return false;
             SetMotherFields(original, mother);
-            return true;
+            return _dataContext.SaveMotherData();
         }
         
         public bool DeleteMother(int id) 
         { 
             Mother mother = GetMotherById(id);
             if(mother==default(Mother)) return false;
-            DataContextManage.Lists.AllMothers.Remove(mother);
-            return true;
+            _dataContext.MotherData.Remove(mother);
+            return _dataContext.SaveMotherData();
         }
         public bool AddSpecialRequest(int id,string request)
         {
             Mother mother = GetMotherById(id);
             if (mother == default(Mother)) return false;
             mother.SpecialRequests.Add(request);
-            return true;
+            return _dataContext.SaveMotherData();
         }
      
     }

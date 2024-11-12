@@ -25,7 +25,8 @@ namespace leyadech.server.Controllers
         [HttpPost]
         public ActionResult<bool>Add([FromBody]Mother mother)
         {
-            bool result=_motherService.AddMother(mother);
+            if (!_motherService.IsValidFields(mother)) return BadRequest();
+            bool result =_motherService.AddMother(mother);
             if (!result) return BadRequest();
             return result;
         }

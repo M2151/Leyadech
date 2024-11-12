@@ -47,6 +47,7 @@ namespace leyadech.server.Controllers
         [HttpPost]
         public ActionResult<bool> Add([FromBody] HelpRequest request)
         {
+            if (!_requestService.IsValidFields(request)) return BadRequest();
             bool result = _requestService.AddRequest(request);
             if (!result)
                 return BadRequest("Invalid request details.");

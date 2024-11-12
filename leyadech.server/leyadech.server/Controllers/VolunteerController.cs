@@ -31,7 +31,8 @@ namespace leyadech.server.Controllers
         [HttpPost]
         public ActionResult<bool> Add([FromBody] Volunteer volunteer)
         {
-            if (volunteer == null) return BadRequest();
+            if (volunteer == null)  return BadRequest();
+            if (!_volunteerService.IsValidFields(volunteer)) return BadRequest();
             bool result = _volunteerService.AddVolunteer(volunteer);
             if (!result)
                 return BadRequest();
