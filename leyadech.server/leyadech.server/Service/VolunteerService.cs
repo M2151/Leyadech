@@ -22,12 +22,13 @@ namespace leyadech.server.Service
         public readonly VolunteerHelper _volunteerHelper;
         readonly SuggestService _suggestService;
         readonly VolunteeringService _volunteeringService;
-        public VolunteerService(IDataContext dataContext,VolunteeringService volunteeringService,SuggestService suggestService)
+        public VolunteerService(IDataContext dataContext,VolunteerHelper volunteerHelper,VolunteeringService volunteeringService,SuggestService suggestService)
         {
             _dataContext = dataContext;
             _dataContext.LoadVolunteerData();
             _suggestService = suggestService;
             _volunteeringService = volunteeringService;
+            _volunteerHelper = volunteerHelper;
         }
         public List<Volunteer> GetAllVolunteers()
         {
@@ -36,7 +37,8 @@ namespace leyadech.server.Service
        
         public bool AddVolunteer(Volunteer volunteer)
         {
-            volunteer.Id = _dataContext.VolunteerData.Max(v => v.Id) + 1;
+            volunteer.Id = _dataContext.VolunteerData.Any()? _dataContext.VolunteerData.Max(v => v.Id) + 1:1;
+            volunteer.JoinDate=DateOnly.FromDateTime(DateTime.Now);
             _dataContext.VolunteerData.Add(volunteer);
             return _dataContext.SaveVolunteerData();
         }
@@ -51,8 +53,15 @@ namespace leyadech.server.Service
             originalVol.Status = newVol.Status;
             
         }
+        public bool IsRequiredFields(Volunteer volunteer)
+        {
+            if(volunteer == null) return false;
+            if(volunteer.Email == null) return false;
+            return true;
+        }
         public bool IsValidFields(Volunteer volunteer)
         {
+            if(volunteer == null) return false;
             if(!IsvalidEmail(volunteer.Email))return false;
             if(!IsValidPhone(volunteer.PhoneNumber))return false;
             return true;
@@ -60,8 +69,6 @@ namespace leyadech.server.Service
         public bool UpdateVolunteerFields(int id, Volunteer volunteer)
         {
             Volunteer original = _volunteerHelper.GetVolunteerById(id);
-            if (original == default(Volunteer))
-                return false;
             SetVolunteerFields(original, volunteer);
             return _dataContext.SaveVolunteerData();
         }
@@ -75,8 +82,6 @@ namespace leyadech.server.Service
         public bool UpdateVolunteerStatus(int id, EVolunteerStatus status)
         {
             Volunteer volunteer = _volunteerHelper.GetVolunteerById(id);
-            if (volunteer == default(Volunteer))
-                return false;
             volunteer.Status = status;
             return _dataContext.SaveVolunteerData();
         }

@@ -50,7 +50,8 @@ namespace leyadech.server.Controllers
         [HttpPost]
         public ActionResult<bool> Add([FromBody] HelpSuggest suggest)
         {
-            if (!_suggestService.IsValidFields(suggest)) return false;
+            if(!_suggestService.IsRequiredFields(suggest)) return BadRequest();
+            if (!_suggestService.IsValidFields(suggest)) return BadRequest();
             bool result = _suggestService.AddSuggest(suggest);
             if (!result)
                 return BadRequest();
@@ -60,19 +61,21 @@ namespace leyadech.server.Controllers
         [HttpPut("{id}")]
         public ActionResult<bool> Update(int id, [FromBody] HelpSuggest suggest)
         {
-            if (!_suggestService.IsValidFields(suggest)) return false;
+            if(_suggestService.GetSuggestById(id)==null)return NotFound();
+            if (!_suggestService.IsValidFields(suggest)) return BadRequest();
             bool result = _suggestService.UpdateSuggest(id, suggest);
             if (!result)
-                return NotFound();
+                return BadRequest();
             return true;
         }
 
         [HttpDelete("{id}")]
         public ActionResult<bool> Delete(int id)
         {
+            if (_suggestService.GetSuggestById(id) == null) return NotFound();
             bool result = _suggestService.DeleteSuggest(id);
             if (!result)
-                return NotFound();
+                return BadRequest();
             return true;
         }
 

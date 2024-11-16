@@ -51,6 +51,7 @@ namespace leyadech.server.Controllers
         [HttpPost]
         public ActionResult<bool> Add([FromBody] HelpRequest request)
         {
+            if (!_requestService.IsRequiredFields(request)) return BadRequest();
             if (!_requestService.IsValidFields(request)) return BadRequest();
             bool result = _requestService.AddRequest(request);
             if (!result)
@@ -61,21 +62,19 @@ namespace leyadech.server.Controllers
         [HttpPut("{id}")]
         public ActionResult<bool> Update(int id, [FromBody] HelpRequest request)
         {
+            if(_requestService.GetRequestById(id)==null) return NotFound();
             if (!_requestService.IsValidFields(request)) return BadRequest();
             bool result = _requestService.UpdateRequest(id, request);
             if (!result)
-                return NotFound();
+                return BadRequest();
             return true;
         }
 
         [HttpDelete("{id}")]
         public ActionResult<bool> Delete(int id)
         {
-            bool result = _requestService.DeleteRequest(id);
-            if (!result)
-                return NotFound();
-
-            return true;
+            if (_requestService.GetRequestById(id) == null) return NotFound();
+            return _requestService.DeleteRequest(id);
         }
 
         

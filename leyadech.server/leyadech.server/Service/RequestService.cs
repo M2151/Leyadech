@@ -22,17 +22,20 @@ namespace leyadech.server.Service
             return _dataContext.RequestData.Find(req=>req.ApplicationId == id);
         }
         public bool IsMotherExist(int id) => _motherService.GetMotherById(id) != null;
-        public bool IsValidFields(HelpRequest request)
+        public bool IsRequiredFields(HelpRequest request)
         {
             if (request == null) return false;
-            Mother mother = _motherService.GetMotherById(request.UserId);
-            if (mother == null) return false;
+            if (!IsMotherExist(request.UserId)) return false;
+            if (request.HelpKind==null) return false;
+            return true;
+        }
+        public bool IsValidFields(HelpRequest request)
+        {
             return true;
         }
         public void SetRequest(HelpRequest original,HelpRequest newReq) 
         {
-            
-            original.UserId = newReq.UserId;
+
             original.Frequency = newReq.Frequency;
             original.UrgencyLevel = newReq.UrgencyLevel;
             original.IsRelevant = newReq.IsRelevant;
@@ -44,26 +47,27 @@ namespace leyadech.server.Service
         public bool UpdateRequest(int id, HelpRequest request) 
         { 
             HelpRequest original= GetRequestById(id);
-            if(original==null) return false;
             SetRequest(original,request);
             return _dataContext.SaveRequestData();
         }
         public bool DeleteRequest(int id) 
         { 
             HelpRequest req= GetRequestById(id);
-            if(req==null)return false;
             _dataContext.RequestData.Remove(req);
             return _dataContext.SaveRequestData();
         }
         public bool AddRequest(HelpRequest request) 
         {
             if(!IsValidFields(request)) return false;
+            _dataContext.LoadRequestData();
+            request.ApplicationId = _dataContext.RequestData.Any() ? _dataContext.RequestData.Max(req => req.ApplicationId) + 1 : 1;
+            request.ApplicationDate= DateTime.Now;
             _dataContext.RequestData.Add(request);
             return _dataContext.SaveRequestData();
         }
         public List<HelpRequest> GetReqByMotherId(int motherId)
         {
-            return GetAllRelevantRequests()
+            return GetAllRequests()
                 .Where(req=>req.UserId==motherId).ToList();
         }
     }

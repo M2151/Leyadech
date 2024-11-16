@@ -35,7 +35,7 @@ namespace leyadech.server.Controllers
         [HttpPost]
         public ActionResult<bool> Add([FromBody] Volunteer volunteer)
         {
-            if (volunteer == null)  return BadRequest();
+            if(!_volunteerService.IsRequiredFields(volunteer))return BadRequest();
             if (!_volunteerService.IsValidFields(volunteer)) return BadRequest();
             bool result = _volunteerService.AddVolunteer(volunteer);
             if (!result)
@@ -46,7 +46,7 @@ namespace leyadech.server.Controllers
         [HttpPut("{id}")]
         public ActionResult<bool> Update(int id, [FromBody] Volunteer volunteer)
         {
-            if (volunteer == null) return BadRequest();
+            if (_volunteerService._volunteerHelper.GetVolunteerById(id) == null) return NotFound();
             if (!_volunteerService.IsValidFields(volunteer)) return BadRequest();
             bool result = _volunteerService.UpdateVolunteerFields(id, volunteer);
             if (!result)
@@ -57,15 +57,17 @@ namespace leyadech.server.Controllers
         [HttpPut("{id}/status")]
         public ActionResult<bool> UpdateStatus(int id, [FromBody] EVolunteerStatus status)
         {
+            if (_volunteerService._volunteerHelper.GetVolunteerById(id) == null) return NotFound();
             bool result = _volunteerService.UpdateVolunteerStatus(id, status);
             if (!result)
-                return NotFound();
+                return BadRequest();
             return true;
         }
 
         [HttpGet("{id}/volunteerings")]
         public ActionResult<List<Volunteering>> GetVolunteeringsByVolunteerId(int id)
         {
+            if (_volunteerService._volunteerHelper.GetVolunteerById(id) == null) return NotFound();
             var volunteerings = _volunteerService.GetAllVolunteeringsById(id);
             return Ok(volunteerings);
         }

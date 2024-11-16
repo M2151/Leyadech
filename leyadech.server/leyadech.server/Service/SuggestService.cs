@@ -11,7 +11,7 @@ namespace leyadech.server.Service
         {
             _dataContext = dataContext;
             _volunteerHelper = volunteerHelper;
-            _dataContext.SaveSuggestData();
+            _dataContext.LoadSuggestData();
             
         }
         public List<HelpSuggest> GetAllSuggests() => _dataContext.SuggestData;
@@ -50,21 +50,26 @@ namespace leyadech.server.Service
         }
         public bool IsValidFields(HelpSuggest suggest)
         {
+            return true;
+        }
+        public bool IsRequiredFields(HelpSuggest suggest)
+        {
             if (suggest == null) return false;
-            //Volunteer volunteer = _volunteerService.GetVolunteerById(suggest.UserId);
-            //if (volunteer == null) return false;
+            Volunteer volunteer = _volunteerHelper.GetVolunteerById(suggest.UserId);
+            if (volunteer == null) return false;
             return true;
         }
         public bool DeleteSuggest(int id)
         {
             HelpSuggest sug = GetSuggestById(id);
-            if (sug == null) return false;
             _dataContext.SuggestData.Remove(sug);
             return _dataContext.SaveSuggestData();
         }
         public bool AddSuggest(HelpSuggest suggest)
         {
-            if (!IsValidFields(suggest)) return false;
+            _dataContext.LoadSuggestData();
+            suggest.ApplicationId = _dataContext.SuggestData.Any() ? _dataContext.SuggestData.Max(sug => sug.ApplicationId) + 1 : 1;
+            suggest.ApplicationDate = DateTime.Now;
             _dataContext.SuggestData.Add(suggest);
             return _dataContext.SaveSuggestData();
         }

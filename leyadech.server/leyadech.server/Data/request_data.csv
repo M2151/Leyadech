@@ -1,0 +1,5 @@
+Frequency,UrgencyLevel,ApplicationId,UserId,HelpKind,Description,ApplicationDate,IsRelevant
+,0,1,0,,,11/17/2024 00:06:51,True
+Disposable,0,2,0,Laundry,wwwwwww,11/17/2024 00:09:36,False
+Disposable,0,3,1,Laundry,wwwwwww,11/17/2024 00:10:19,False
+Disposable,0,4,1,Cleaning,string,11/17/2024 00:14:31,True

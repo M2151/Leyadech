@@ -60,11 +60,16 @@ namespace leyadech.server.Service
         {
             try
             {
-                using (var reader = new StreamReader(_path.RequestPath))
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                if (new FileInfo(_path.MotherPath).Length > 0)
                 {
-                    RequestData = csv.GetRecords<HelpRequest>().ToList();
+                    using (var reader = new StreamReader(_path.RequestPath))
+                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                    {
+                        RequestData = csv.GetRecords<HelpRequest>().ToList();
+                    }
                 }
+                else
+                    RequestData = new List<HelpRequest>();
                 return true;
             }
             catch
@@ -77,11 +82,16 @@ namespace leyadech.server.Service
         {
             try
             {
-                using (var reader = new StreamReader(_path.SuggestPath))
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                if (new FileInfo(_path.MotherPath).Length > 0)
                 {
-                    SuggestData = csv.GetRecords<HelpSuggest>().ToList();
+                    using (var reader = new StreamReader(_path.SuggestPath))
+                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                    {
+                        SuggestData = csv.GetRecords<HelpSuggest>().ToList();
+                    }
                 }
+                else
+                    SuggestData=new List<HelpSuggest>();
                 return true;
             }
             catch
@@ -94,11 +104,16 @@ namespace leyadech.server.Service
         {
             try
             {
-                using (var reader = new StreamReader(_path.VolunteerPath))
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                if (new FileInfo(_path.MotherPath).Length > 0)
                 {
-                    VolunteerData = csv.GetRecords<Volunteer>().ToList();
+                    using (var reader = new StreamReader(_path.VolunteerPath))
+                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                    {
+                        VolunteerData = csv.GetRecords<Volunteer>().ToList();
+                    }
                 }
+                else
+                    VolunteerData=new List<Volunteer>();
                 return true;
             }
             catch
@@ -111,10 +126,17 @@ namespace leyadech.server.Service
         {
             try
             {
-                using (var reader = new StreamReader(_path.VolunteeringPath))
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                if (new FileInfo(_path.MotherPath).Length > 0)
                 {
-                    VolunteeringData = csv.GetRecords<Volunteering>().ToList();
+                    using (var reader = new StreamReader(_path.VolunteeringPath))
+                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                    {
+                        VolunteeringData = csv.GetRecords<Volunteering>().ToList();
+                    }
+                }
+                else
+                {
+                    VolunteeringData=new List<Volunteering>();
                 }
                 return true;
             }

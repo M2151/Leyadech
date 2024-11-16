@@ -40,7 +40,7 @@ namespace leyadech.server.Service
         public bool AddMother(Mother mother)
         {
             _dataContext.LoadMotherData();
-            mother.Id = _dataContext.MotherData.Any() ? _dataContext.MotherData.Max(mother => mother.Id) + 1 : 0;
+            mother.Id = _dataContext.MotherData.Any() ? _dataContext.MotherData.Max(mother => mother.Id) + 1 : 1;
             mother.JoinDate=DateOnly.FromDateTime(DateTime.Today);
             SetMotherStatus(mother);
             _dataContext.MotherData.Add(mother);

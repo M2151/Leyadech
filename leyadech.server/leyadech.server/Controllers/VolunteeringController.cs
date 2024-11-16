@@ -29,7 +29,9 @@ namespace leyadech.server.Controllers
         [HttpPost]
         public ActionResult<bool> Add([FromBody]Volunteering volunteering)
         {
-            if(!_volunteeringService.IsValidFields(volunteering)) 
+            if(!_volunteeringService.IsRequiredFields(volunteering)) 
+                return BadRequest();
+            if(!_volunteeringService.IsValidFields(volunteering))
                 return BadRequest();
             bool result = _volunteeringService.AddVolunteering(volunteering);
             if (!result) return BadRequest();
@@ -38,6 +40,8 @@ namespace leyadech.server.Controllers
         [HttpPut("{id}")]
         public ActionResult<bool> Update(int id, [FromBody] Volunteering volunteering)
         {
+            if(_volunteeringService.GetVolunteeringById(id)==null)
+                return NotFound();
             if(!_volunteeringService.IsValidFields(volunteering)) return BadRequest();
             bool result=_volunteeringService.UpdateVolunteering(id, volunteering);
             if (!result) return NotFound();
@@ -46,16 +50,20 @@ namespace leyadech.server.Controllers
         [HttpDelete("{id}")]
         public ActionResult<bool> Delete(int id)
         {
+            if (_volunteeringService.GetVolunteeringById(id) == null)
+                return NotFound();
             bool result=_volunteeringService.DeleteVolunteering(id);
-            if (!result) return NotFound();
+            if (!result) return BadRequest();
             return true;
         }
         [HttpPut("{id}/feedback")]
         public ActionResult<bool> AddFeedback(int id,[FromBody]Feedback feedback)
         {
-            if(feedback == null) return BadRequest();
+            if (_volunteeringService.GetVolunteeringById(id) == null)
+                return NotFound();
+            if (feedback == null) return BadRequest();
             bool result = _volunteeringService.AddFeedback(id,feedback);
-            if (!result) return NotFound();
+            if (!result) return BadRequest();
             return true;
         }
 
