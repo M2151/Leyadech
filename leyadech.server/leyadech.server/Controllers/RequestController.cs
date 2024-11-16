@@ -10,7 +10,11 @@ namespace leyadech.server.Controllers
     [Route("api/[controller]")]
     public class RequestController : Controller
     {
-        private readonly RequestService _requestService = new RequestService();
+        private readonly RequestService _requestService;
+        public RequestController(RequestService requestService)
+        {
+            _requestService = requestService;
+        }
 
         [HttpGet]
         public ActionResult<List<HelpRequest>> Get(int? motherId)
@@ -18,14 +22,14 @@ namespace leyadech.server.Controllers
             List<HelpRequest> requests;
             if (motherId.HasValue)
             {
-                MotherService motherService = new MotherService();
-                if (motherService.GetMotherById(motherId.Value) == null)
-                    return BadRequest();
+                if (!_requestService.IsMotherExist(motherId.Value))
+                    return NotFound();
                 requests = _requestService.GetReqByMotherId(motherId.Value);
             }
             else
                 requests = _requestService.GetAllRequests();
             return Ok(requests);
+
         }
 
         [HttpGet("relevant")]

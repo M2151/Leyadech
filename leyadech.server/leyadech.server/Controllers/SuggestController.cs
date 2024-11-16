@@ -10,7 +10,11 @@ namespace leyadech.server.Controllers
     [Route("api/[controller]")]
     public class SuggestController : Controller
     {
-        private readonly SuggestService _suggestService = new SuggestService();
+        private readonly SuggestService _suggestService;
+        public SuggestController(SuggestService suggestService)
+        {
+            _suggestService = suggestService;
+        }
 
         [HttpGet]
         public ActionResult<List<HelpSuggest>> Get(int? volId)
@@ -18,9 +22,8 @@ namespace leyadech.server.Controllers
             List<HelpSuggest> suggests;
             if (volId.HasValue)
             {
-                VolunteerService volService = new VolunteerService();
-                if (volService.GetVolunteerById(volId.Value) == null)
-                    return BadRequest();
+                if (!_suggestService.IsVolExist(volId.Value))
+                    return NotFound();
                 suggests = _suggestService.GetSegByVolId(volId.Value);
             }
             else

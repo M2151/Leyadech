@@ -9,34 +9,49 @@ namespace leyadech.server.Service
 {
     public class DataContext : IDataContext
     {
-       
+
 
         readonly DataPathes _path;
-
+        public List<Mother> MotherData { get; set; }
+        public List<Volunteer> VolunteerData { get; set; }
+        public List<HelpRequest> RequestData { get; set; }
+        public List<HelpSuggest> SuggestData { get; set; }
+        public List<Volunteering> VolunteeringData { get; set; }
         public DataContext(DataPathes path)
         {
             _path = path;
+            if (!File.Exists(_path.MotherPath))
+                File.Create(_path.MotherPath).Close();
+            if (!File.Exists(_path.VolunteerPath))
+                File.Create(_path.VolunteerPath).Close();
+            if (!File.Exists(_path.RequestPath))
+                File.Create(_path.RequestPath).Close();
+            if (!File.Exists(_path.SuggestPath))
+                File.Create(_path.SuggestPath).Close();
+            if (!File.Exists(_path.VolunteeringPath))
+                File.Create(_path.VolunteeringPath).Close();
         }
-
-        public List<Mother> MotherData { get; set; }
-        public List<Volunteer> VolunteerData { get; set; }
-        public List<HelpRequest> RequestData { get ; set; }
-        public List<HelpSuggest> SuggestData { get; set ; }
-        public List<Volunteering> VolunteeringData { get; set; }
 
         public bool LoadMotherData()
         {
+
             try
             {
-                using (var reader = new StreamReader(_path.MotherPath))
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                if (new FileInfo(_path.MotherPath).Length > 0)
                 {
-                    MotherData = csv.GetRecords<Mother>().ToList();
+                    using (var reader = new StreamReader(_path.MotherPath))
+                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                    {
+                        MotherData = csv.GetRecords<Mother>().ToList();
+                    }
                 }
+                else
+                    MotherData = new List<Mother>();
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine($"Error loading Mother data: {ex.Message}");
                 return false;
             }
         }
@@ -65,7 +80,7 @@ namespace leyadech.server.Service
                 using (var reader = new StreamReader(_path.SuggestPath))
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
-                    SuggestData= csv.GetRecords<HelpSuggest>().ToList();
+                    SuggestData = csv.GetRecords<HelpSuggest>().ToList();
                 }
                 return true;
             }
@@ -128,7 +143,7 @@ namespace leyadech.server.Service
             }
         }
 
-       
+
 
         public bool SaveRequestData()
         {
@@ -149,7 +164,7 @@ namespace leyadech.server.Service
             }
         }
 
-    
+
 
         public bool SaveSuggestData()
         {
@@ -170,7 +185,7 @@ namespace leyadech.server.Service
             }
         }
 
-       
+
         public bool SaveVolunteerData()
         {
             try
@@ -209,15 +224,15 @@ namespace leyadech.server.Service
             }
         }
 
-     
+
 
         public class DataPathes
         {
-            public string MotherPath { get; set; } = Path.Combine(AppContext.BaseDirectory, "Data", "mother_data.csv");
-            public string VolunteerPath { get; set; } = Path.Combine(AppContext.BaseDirectory, "Data", "volunteer_data.csv");
-            public string RequestPath { get; set; } = Path.Combine(AppContext.BaseDirectory, "Data", "request_data.csv");
-            public string SuggestPath { get; set; } = Path.Combine(AppContext.BaseDirectory, "Data", "suggest_data.csv");
-            public string VolunteeringPath { get; set; } = Path.Combine(AppContext.BaseDirectory, "Data", "volunteering_data.csv");
+            public string MotherPath { get; set; } = Path.Combine(Directory.GetCurrentDirectory(), "Data", "mother_data.csv");
+            public string VolunteerPath { get; set; } = Path.Combine(Directory.GetCurrentDirectory(), "Data", "volunteer_data.csv");
+            public string RequestPath { get; set; } = Path.Combine(Directory.GetCurrentDirectory(), "Data", "request_data.csv");
+            public string SuggestPath { get; set; } = Path.Combine(Directory.GetCurrentDirectory(), "Data", "suggest_data.csv");
+            public string VolunteeringPath { get; set; } = Path.Combine(Directory.GetCurrentDirectory(), "Data", "volunteering_data.csv");
         }
     }
 }

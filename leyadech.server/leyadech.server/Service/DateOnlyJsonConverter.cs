@@ -1,0 +1,23 @@
+﻿using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+public class DateOnlyJsonConverter : JsonConverter<DateOnly>
+{
+    private const string DateFormat = "yyyy-MM-dd";
+
+    public override DateOnly Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        if (DateOnly.TryParseExact(reader.GetString(), DateFormat, null, System.Globalization.DateTimeStyles.None, out var date))
+        {
+            return date;
+        }
+
+        throw new JsonException($"Unable to parse '{reader.GetString()}' as a valid DateOnly.");
+    }
+
+    public override void Write(Utf8JsonWriter writer, DateOnly value, JsonSerializerOptions options)
+    {
+        writer.WriteStringValue(value.ToString(DateFormat));
+    }
+}

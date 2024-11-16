@@ -10,7 +10,11 @@ namespace leyadech.server.Controllers
     [Route("api/[controller]")]
     public class VolunteerController : Controller
     {
-        private readonly VolunteerService _volunteerService = new VolunteerService();
+        private readonly VolunteerService _volunteerService;
+        public VolunteerController(VolunteerService volunteerService)
+        {
+            _volunteerService = volunteerService;
+        }
 
         [HttpGet]
         public ActionResult<List<Volunteer>> Get()
@@ -22,7 +26,7 @@ namespace leyadech.server.Controllers
         [HttpGet("{id}")]
         public ActionResult<Volunteer> Get(int id)
         {
-            var volunteer = _volunteerService.GetVolunteerById(id);
+            var volunteer = _volunteerService._volunteerHelper.GetVolunteerById(id);
             if (volunteer == null)
                 return NotFound();
             return Ok(volunteer);

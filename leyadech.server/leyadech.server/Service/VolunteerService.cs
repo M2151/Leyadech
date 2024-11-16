@@ -2,9 +2,24 @@
 
 namespace leyadech.server.Service
 {
+    public class VolunteerHelper
+    {
+        readonly IDataContext _dataContext;
+        public VolunteerHelper(IDataContext dataContext)
+        {
+            _dataContext = dataContext;
+            _dataContext.LoadVolunteerData();
+           
+        }
+        public Volunteer GetVolunteerById(int id)
+        {
+            return _dataContext.VolunteerData.Where(v => v.Id == id).FirstOrDefault<Volunteer>();
+        }
+    }
     public class VolunteerService:UserService
     {
         readonly IDataContext _dataContext;
+        public readonly VolunteerHelper _volunteerHelper;
         readonly SuggestService _suggestService;
         readonly VolunteeringService _volunteeringService;
         public VolunteerService(IDataContext dataContext,VolunteeringService volunteeringService,SuggestService suggestService)
@@ -18,10 +33,7 @@ namespace leyadech.server.Service
         {
             return _dataContext.VolunteerData;
         }
-        public Volunteer GetVolunteerById(int id)
-        {
-            return _dataContext.VolunteerData.Where(v => v.Id == id).FirstOrDefault<Volunteer>();
-        }
+       
         public bool AddVolunteer(Volunteer volunteer)
         {
             volunteer.Id = _dataContext.VolunteerData.Max(v => v.Id) + 1;
@@ -47,7 +59,7 @@ namespace leyadech.server.Service
         }
         public bool UpdateVolunteerFields(int id, Volunteer volunteer)
         {
-            Volunteer original = GetVolunteerById(id);
+            Volunteer original = _volunteerHelper.GetVolunteerById(id);
             if (original == default(Volunteer))
                 return false;
             SetVolunteerFields(original, volunteer);
@@ -62,7 +74,7 @@ namespace leyadech.server.Service
         //
         public bool UpdateVolunteerStatus(int id, EVolunteerStatus status)
         {
-            Volunteer volunteer = GetVolunteerById(id);
+            Volunteer volunteer = _volunteerHelper.GetVolunteerById(id);
             if (volunteer == default(Volunteer))
                 return false;
             volunteer.Status = status;

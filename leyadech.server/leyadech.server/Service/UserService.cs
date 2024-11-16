@@ -4,10 +4,9 @@ namespace leyadech.server.Service
 {
     public class UserService
     {
-        public bool IsvalidEmail(string email)
+        public bool IsvalidEmail(string? email)
         {
-            if (email == null)
-                return false;
+            if (email == null) return true;
             string trimmedEmail = email.Trim();
 
             if (trimmedEmail.EndsWith("."))
@@ -24,7 +23,7 @@ namespace leyadech.server.Service
                 return false;
             }
         }
-        public bool IsValidPhone(string phone)
+        public bool IsValidPhone(string? phone)
         {
             if (phone == null) return true;
             string trimmedPhone = phone.Trim();

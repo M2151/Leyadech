@@ -7,12 +7,15 @@ namespace leyadech.server.Service
     {
 
         readonly IDataContext _dataContext;
+
         public VolunteeringService(IDataContext dataContext)
         {
             _dataContext = dataContext;
             _dataContext.LoadVolunteeringData();
+           
+
         }
-        public List<Volunteering> GetAllVolunteerings() => DataContextManage.Lists.AllVolunteerings;
+        public List<Volunteering> GetAllVolunteerings() => _dataContext.VolunteeringData;
         public Volunteering GetVolunteeringById(int id) 
         {
             return _dataContext.VolunteeringData.Where(vol => vol.VolunteeringId == id)
@@ -21,12 +24,7 @@ namespace leyadech.server.Service
         public bool IsValidFields(Volunteering vol)
         {
             if(vol==null) return false;
-            SuggestService suggestService = new SuggestService();
-            RequestService requestService = new RequestService();
-            if (suggestService.GetSuggestById(vol.SuggestId) == null)
-                return false;
-            if (requestService.GetRequestById(vol.RequestId) == null)
-                return false;
+            
             if (vol.DateEnd < vol.DateStart)
                 return false;
             if (vol.TimeEnd < vol.TimeStart)

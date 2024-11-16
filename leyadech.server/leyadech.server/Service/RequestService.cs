@@ -12,7 +12,7 @@ namespace leyadech.server.Service
             _dataContext.LoadRequestData();
             _motherService = motherService;
         }
-        public List<HelpRequest> GetAllRequests() => DataContextManage.Lists.AllRequests;
+        public List<HelpRequest> GetAllRequests() => _dataContext.RequestData;
         public List<HelpRequest> GetAllRelevantRequests() 
         {
             return _dataContext.RequestData.Where(req => req.IsRelevant).ToList();
@@ -21,6 +21,7 @@ namespace leyadech.server.Service
         {
             return _dataContext.RequestData.Find(req=>req.ApplicationId == id);
         }
+        public bool IsMotherExist(int id) => _motherService.GetMotherById(id) != null;
         public bool IsValidFields(HelpRequest request)
         {
             if (request == null) return false;

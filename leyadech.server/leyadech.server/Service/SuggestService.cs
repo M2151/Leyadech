@@ -2,18 +2,19 @@
 
 namespace leyadech.server.Service
 {
+    
     public class SuggestService
     {
         readonly IDataContext _dataContext;
-        readonly VolunteerService _volunteerService;
-        public SuggestService(IDataContext dataContext, VolunteerService volunteerService)
+        readonly VolunteerHelper _volunteerHelper;
+        public SuggestService(IDataContext dataContext, VolunteerHelper volunteerHelper)
         {
             _dataContext = dataContext;
-            _volunteerService = volunteerService;
+            _volunteerHelper = volunteerHelper;
             _dataContext.SaveSuggestData();
             
         }
-        public List<HelpSuggest> GetAllSuggests() => DataContextManage.Lists.AllSuggests;
+        public List<HelpSuggest> GetAllSuggests() => _dataContext.SuggestData;
         public List<HelpSuggest> GetAllRelevantSuggests()
         {
             return _dataContext.SuggestData.Where(seg => seg.IsRelevant).ToList();
@@ -43,11 +44,15 @@ namespace leyadech.server.Service
             return _dataContext.SaveSuggestData();
 
         }
+        public bool IsVolExist(int id)
+        {
+            return _volunteerHelper.GetVolunteerById(id) != null;   
+        }
         public bool IsValidFields(HelpSuggest suggest)
         {
             if (suggest == null) return false;
-            Volunteer volunteer = _volunteerService.GetVolunteerById(suggest.UserId);
-            if (volunteer == null) return false;
+            //Volunteer volunteer = _volunteerService.GetVolunteerById(suggest.UserId);
+            //if (volunteer == null) return false;
             return true;
         }
         public bool DeleteSuggest(int id)

@@ -10,9 +10,9 @@ namespace leyadech.server.Controllers
     public class VolunteeringController : Controller
     {
         readonly VolunteeringService _volunteeringService;
-        public VolunteeringController()
+        public VolunteeringController(VolunteeringService volunteeringService)
         {
-            _volunteeringService = new VolunteeringService();
+            _volunteeringService = volunteeringService;
         }
         [HttpGet]
         public ActionResult<List<Volunteering>> Get()
