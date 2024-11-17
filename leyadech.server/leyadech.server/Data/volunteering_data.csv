@@ -1,1 +1,2 @@
-VolunteeringId,RequestId,SuggestId,Description,HelpKind,HelpFrequency,DateStart,DateEnd,TimeStart,TimeEnd,VolunteeringId,SatisfactionLevel,Content
+VolunteeringId,RequestId,SuggestId,Description,HelpKind,HelpFrequency,DateStart,DateEnd,TimeStart,TimeEnd,Feedback
+1,1,1,string,Cleaning,Daily,,,,,

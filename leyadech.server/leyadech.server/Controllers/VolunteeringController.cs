@@ -57,7 +57,7 @@ namespace leyadech.server.Controllers
             return true;
         }
         [HttpPut("{id}/feedback")]
-        public ActionResult<bool> AddFeedback(int id,[FromBody]Feedback feedback)
+        public ActionResult<bool> AddFeedback(int id,[FromBody]string? feedback)
         {
             if (_volunteeringService.GetVolunteeringById(id) == null)
                 return NotFound();

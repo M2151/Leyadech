@@ -13,7 +13,7 @@
         public DateOnly? DateEnd { get; set; }
         public TimeOnly? TimeStart { get; set; }
         public TimeOnly? TimeEnd { get; set; }
-        public Feedback? Feedback { get; set; }
+        public string? Feedback { get; set; }
 
     }
 }

@@ -1,3 +1,2 @@
 Status,BirthDate,JoinDate,FamilySize,ChildrenBelow7,HelpKindNeeded,IsStandingOrder,Id,FirstName,LastName,Address,PhoneNumber,Email
-WeekAfterBirth,11/16/2024,11/16/2024,0,0,Cleaning,True,0,string,string,string,0556777068,m0556777068@gmail.com
-WeekAfterBirth,11/16/2024,11/16/2024,,,,False,1,miriam,,,,
+WeekAfterBirth,11/14/2024,11/17/2024,0,0,Cleaning,True,1,string,string,string,0556777068,string@gmail.com

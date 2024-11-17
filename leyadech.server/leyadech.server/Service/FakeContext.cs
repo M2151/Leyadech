@@ -12,37 +12,37 @@ namespace leyadech.server.Service
 
         public bool LoadMotherData()
         {
-            try
-            {
-                Mother mother = new Mother() { Id = 1, Address = "sdsfsd", Email = "m1233@gmail.com", JoinDate = DateOnly.FromDateTime(DateTime.Now) };
-                MotherData = new List<Mother> { mother };
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-            
+            Mother mother = new Mother() { Id = 1, Address = "sdsfsd", Email = "m1233@gmail.com", JoinDate = DateOnly.FromDateTime(DateTime.Now) };
+            MotherData = new List<Mother> { mother };
+            return true;
         }
 
         public bool LoadRequestData()
         {
-            throw new NotImplementedException();
+           HelpRequest req = new HelpRequest() { ApplicationId = 1, UserId = 1, Description = "qqqq" ,HelpKind=EHelpKind.Babysitting}; 
+           RequestData = new List<HelpRequest> { req };
+           return true;
         }
 
         public bool LoadSuggestData()
         {
-            throw new NotImplementedException();
+            HelpSuggest sug=new HelpSuggest() { HelpKind = EHelpKind.Babysitting ,ApplicationId=1,UserId=1};
+            SuggestData=new List<HelpSuggest> { sug };
+            return true;
         }
 
         public bool LoadVolunteerData()
         {
-            throw new NotImplementedException();
+            Volunteer volunteer = new Volunteer() { Id = 1, Email = "m0556777068@gmail.com" };
+            VolunteerData =new List<Volunteer> { volunteer };
+            return true;
         }
 
         public bool LoadVolunteeringData()
         {
-            throw new NotImplementedException();
+            Volunteering volunteering = new Volunteering() { VolunteeringId = 1 };
+            VolunteeringData =new List<Volunteering> {  volunteering };
+            return true;
         }
 
         public bool SaveMotherData()
@@ -53,30 +53,30 @@ namespace leyadech.server.Service
 
         public bool SaveRequestData()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
 
         public bool SaveSuggestData()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
-      
+
 
         public bool SaveVolunteerData()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
 
         public bool SaveVolunteeringData()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
-        
 
-     
+
+
     }
 }
