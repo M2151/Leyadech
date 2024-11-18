@@ -1,2 +1,2 @@
-Status,BirthDate,JoinDate,FamilySize,ChildrenBelow7,HelpKindNeeded,IsStandingOrder,Id,FirstName,LastName,Address,PhoneNumber,Email
-WeekAfterBirth,11/14/2024,11/17/2024,0,0,Cleaning,True,1,string,string,string,0556777068,string@gmail.com
+Id,FirstName,LastName,Address,Email,PhoneNumber,BirthDate,JoinDate,Status,FamilySize,ChildrenBelow7,HelpKindNeeded,SpecialRequests,IsStandingOrder
+1,string,string,string,string@gmail.com,0556777068,11/11/2024,11/18/2024,WeekAfterBirth,0,0,Cleaning,string;bravo,True

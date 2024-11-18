@@ -42,6 +42,7 @@ namespace leyadech.server.Service
                     using (var reader = new StreamReader(_path.MotherPath))
                     using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
+                        csv.Context.RegisterClassMap<MotherMap>();
                         MotherData = csv.GetRecords<Mother>().ToList();
                     }
                 }
@@ -65,6 +66,7 @@ namespace leyadech.server.Service
                     using (var reader = new StreamReader(_path.RequestPath))
                     using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
+                        csv.Context.RegisterClassMap<RequestMap>();
                         RequestData = csv.GetRecords<HelpRequest>().ToList();
                     }
                 }
@@ -155,6 +157,7 @@ namespace leyadech.server.Service
                 using (var writer = new StreamWriter(_path.MotherPath))
                 using (var csv = new CsvWriter(writer, new CsvConfiguration(CultureInfo.InvariantCulture)))
                 {
+                    csv.Context.RegisterClassMap<MotherMap>();
                     csv.WriteRecords(MotherData);
                 }
                 return true;
@@ -176,6 +179,7 @@ namespace leyadech.server.Service
                 using (var writer = new StreamWriter(_path.RequestPath))
                 using (var csv = new CsvWriter(writer, new CsvConfiguration(CultureInfo.InvariantCulture)))
                 {
+                    csv.Context.RegisterClassMap<RequestMap>();
                     csv.WriteRecords(RequestData);
                 }
                 return true;

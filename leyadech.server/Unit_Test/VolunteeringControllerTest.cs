@@ -28,7 +28,7 @@ namespace Unit_Test
         {
             var id = 1;
             var vol = _volunteeringController.Get(id);
-            Assert.IsType<ActionResult<Volunteering>>(vol);
+            Assert.IsType<ActionResult<Volunteering>>(vol.Result);
         }
         [Fact]
         public void Add_ReturnsBadRequest_NotValidDate()
@@ -37,7 +37,7 @@ namespace Unit_Test
             var tommorow = today.AddDays(1);
             var vol = new Volunteering() { DateStart = tommorow, DateEnd = today };
             var res = _volunteeringController.Add(vol);
-            Assert.IsType<BadRequestResult>(res);
+            Assert.IsType<BadRequestResult>(res.Result);
         }
         [Fact]
         public void Add_ReturnsBadRequest_NotValidTime()
@@ -46,7 +46,7 @@ namespace Unit_Test
             var h2 = h1.AddHours(1);
             var vol = new Volunteering() { TimeEnd = h1, TimeStart = h2 };
             var res = _volunteeringController.Add(vol);
-            Assert.False(res.Value);
+            Assert.IsType<BadRequestResult>(res.Result);
         }
     }
 }

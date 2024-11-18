@@ -1,0 +1,2 @@
+ApplicationId,UserId,HelpKind,Description,ApplicationDate,IsRelevant,Frequency,UrgencyLevel,Preferences
+1,1,Cleaning,string,11/18/2024 06:58:22,True,Disposable,0,string
