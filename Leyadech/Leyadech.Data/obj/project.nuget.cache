@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "dVd5nJcb7dc=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\user1\\Documents\\מירי\\תכנות\\.NET core\\Leyadech\\Leyadech\\Leyadech.Data\\Leyadech.Data.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\user1\\.nuget\\packages\\csvhelper\\33.0.1\\csvhelper.33.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
