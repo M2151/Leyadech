@@ -1,4 +1,4 @@
-﻿namespace leyadech.server.DTO
+﻿namespace Leyadech.Core.Entities
 {
     public class Feedback
     {

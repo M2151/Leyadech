@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "+nE4ja+s1Ek=",
+  "dgSpecHash": "wLYAl1imWB0=",
   "success": true,
-  "projectFilePath": "C:\\Users\\user1\\Documents\\מירי\\תכנות\\.NET core\\Leyadech\\Leyadech\\Leyadech.Service\\Leyadech.Service.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\user1\\Documents\\Miri\\hw\\.NET core\\Leyadech\\Leyadech\\Leyadech.Service\\Leyadech.Service.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\user1\\.nuget\\packages\\csvhelper\\33.0.1\\csvhelper.33.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

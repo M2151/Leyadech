@@ -1,0 +1,16 @@
+C:\Users\user1\Documents\Miri\hw\.NET core\Leyadech\Leyadech\Leyadech.Data\bin\Debug\net6.0\Leyadech.Data.deps.json
+C:\Users\user1\Documents\Miri\hw\.NET core\Leyadech\Leyadech\Leyadech.Data\bin\Debug\net6.0\Leyadech.Data.dll
+C:\Users\user1\Documents\Miri\hw\.NET core\Leyadech\Leyadech\Leyadech.Data\bin\Debug\net6.0\Leyadech.Data.pdb
+C:\Users\user1\Documents\Miri\hw\.NET core\Leyadech\Leyadech\Leyadech.Data\bin\Debug\net6.0\Leyadech.Core.dll
+C:\Users\user1\Documents\Miri\hw\.NET core\Leyadech\Leyadech\Leyadech.Data\bin\Debug\net6.0\Leyadech.Core.pdb
+C:\Users\user1\Documents\Miri\hw\.NET core\Leyadech\Leyadech\Leyadech.Data\obj\Debug\net6.0\Leyadech.Data.csproj.AssemblyReference.cache
+C:\Users\user1\Documents\Miri\hw\.NET core\Leyadech\Leyadech\Leyadech.Data\obj\Debug\net6.0\Leyadech.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user1\Documents\Miri\hw\.NET core\Leyadech\Leyadech\Leyadech.Data\obj\Debug\net6.0\Leyadech.Data.AssemblyInfoInputs.cache
+C:\Users\user1\Documents\Miri\hw\.NET core\Leyadech\Leyadech\Leyadech.Data\obj\Debug\net6.0\Leyadech.Data.AssemblyInfo.cs
+C:\Users\user1\Documents\Miri\hw\.NET core\Leyadech\Leyadech\Leyadech.Data\obj\Debug\net6.0\Leyadech.Data.csproj.CoreCompileInputs.cache
+C:\Users\user1\Documents\Miri\hw\.NET core\Leyadech\Leyadech\Leyadech.Data\obj\Debug\net6.0\Leyadech.Data.sourcelink.json
+C:\Users\user1\Documents\Miri\hw\.NET core\Leyadech\Leyadech\Leyadech.Data\obj\Debug\net6.0\Leyadech.D9E56438.Up2Date
+C:\Users\user1\Documents\Miri\hw\.NET core\Leyadech\Leyadech\Leyadech.Data\obj\Debug\net6.0\Leyadech.Data.dll
+C:\Users\user1\Documents\Miri\hw\.NET core\Leyadech\Leyadech\Leyadech.Data\obj\Debug\net6.0\refint\Leyadech.Data.dll
+C:\Users\user1\Documents\Miri\hw\.NET core\Leyadech\Leyadech\Leyadech.Data\obj\Debug\net6.0\Leyadech.Data.pdb
+C:\Users\user1\Documents\Miri\hw\.NET core\Leyadech\Leyadech\Leyadech.Data\obj\Debug\net6.0\ref\Leyadech.Data.dll

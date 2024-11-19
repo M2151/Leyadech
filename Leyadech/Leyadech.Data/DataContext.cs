@@ -1,16 +1,15 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using leyadech.server.DTO;
+using Leyadech.Core.Entities;
+using Leyadech.Core.Mapping;
 using System.Formats.Asn1;
 using System.Globalization;
 
-namespace leyadech.server.Service
+namespace Leyadech.Data
 {
     public class DataContext 
     {
-
-
-        readonly DataPathes _path;
+        private readonly DataPathes _path;
         public List<Mother> MotherData { get; set; }
         public List<Volunteer> VolunteerData { get; set; }
         public List<HelpRequest> RequestData { get; set; }
@@ -258,11 +257,20 @@ namespace leyadech.server.Service
 
         public class DataPathes
         {
-            public string MotherPath { get; set; } = Path.Combine(Directory.GetCurrentDirectory(), "Data", "mother_data.csv");
-            public string VolunteerPath { get; set; } = Path.Combine(Directory.GetCurrentDirectory(), "Data", "volunteer_data.csv");
-            public string RequestPath { get; set; } = Path.Combine(Directory.GetCurrentDirectory(), "Data", "request_data.csv");
-            public string SuggestPath { get; set; } = Path.Combine(Directory.GetCurrentDirectory(), "Data", "suggest_data.csv");
-            public string VolunteeringPath { get; set; } = Path.Combine(Directory.GetCurrentDirectory(), "Data", "volunteering_data.csv");
+            private readonly string _basePath = Path.Combine(Directory.GetCurrentDirectory(), "..", "Leyadech.Data", "Data");
+            public string MotherPath { get; set; }
+            public string VolunteerPath { get; set; } 
+            public string RequestPath { get; set; }
+            public string SuggestPath { get; set; } 
+            public string VolunteeringPath { get; set; }
+            public DataPathes() 
+            {
+                MotherPath = Path.Combine(_basePath, "mother_data.csv");
+                RequestPath = Path.Combine(_basePath, "request_data.csv");
+                SuggestPath = Path.Combine(_basePath, "suggest_data.csv");
+                VolunteerPath = Path.Combine(_basePath, "volunteer_data.csv");
+                VolunteeringPath = Path.Combine(_basePath, "volunteering_data.csv");
+            }
         }
     }
 }

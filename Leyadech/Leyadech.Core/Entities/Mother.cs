@@ -1,4 +1,4 @@
-﻿namespace leyadech.server.DTO
+﻿namespace Leyadech.Core.Entities
 {
     [Flags]
     public enum EHelpKind { Cleaning = 1, Laundry = 2, Babysitting = 4, Meals = 8, Other = 16 }

@@ -2,6 +2,19 @@
   "version": 3,
   "targets": {
     "net6.0": {
+      "CsvHelper/33.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/CsvHelper.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/CsvHelper.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.Extensions.ApiDescription.Server/6.0.5": {
         "type": "package",
         "build": {
@@ -88,10 +101,78 @@
         "frameworkReferences": [
           "Microsoft.AspNetCore.App"
         ]
+      },
+      "Leyadech.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "CsvHelper": "33.0.1"
+        },
+        "compile": {
+          "bin/placeholder/Leyadech.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Leyadech.Core.dll": {}
+        }
+      },
+      "Leyadech.Data/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "CsvHelper": "33.0.1",
+          "Leyadech.Core": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Leyadech.Data.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Leyadech.Data.dll": {}
+        }
+      },
+      "Leyadech.Service/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Leyadech.Core": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Leyadech.Service.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Leyadech.Service.dll": {}
+        }
       }
     }
   },
   "libraries": {
+    "CsvHelper/33.0.1": {
+      "sha512": "fev4lynklAU2A9GVMLtwarkwaanjSYB4wUqO2nOJX5hnzObORzUqVLe+bDYCUyIIRQM4o5Bsq3CcyJR89iMmEQ==",
+      "type": "package",
+      "path": "csvhelper/33.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "csvhelper.33.0.1.nupkg.sha512",
+        "csvhelper.nuspec",
+        "lib/net462/CsvHelper.dll",
+        "lib/net462/CsvHelper.xml",
+        "lib/net47/CsvHelper.dll",
+        "lib/net47/CsvHelper.xml",
+        "lib/net48/CsvHelper.dll",
+        "lib/net48/CsvHelper.xml",
+        "lib/net6.0/CsvHelper.dll",
+        "lib/net6.0/CsvHelper.xml",
+        "lib/net7.0/CsvHelper.dll",
+        "lib/net7.0/CsvHelper.xml",
+        "lib/net8.0/CsvHelper.dll",
+        "lib/net8.0/CsvHelper.xml",
+        "lib/netstandard2.0/CsvHelper.dll",
+        "lib/netstandard2.0/CsvHelper.xml",
+        "lib/netstandard2.1/CsvHelper.dll",
+        "lib/netstandard2.1/CsvHelper.xml"
+      ]
+    },
     "Microsoft.Extensions.ApiDescription.Server/6.0.5": {
       "sha512": "Ckb5EDBUNJdFWyajfXzUIMRkhf52fHZOQuuZg/oiu8y7zDCVwD0iHhew6MnThjHmevanpxL3f5ci2TtHQEN6bw==",
       "type": "package",
@@ -429,10 +510,28 @@
         "swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512",
         "swashbuckle.aspnetcore.swaggerui.nuspec"
       ]
+    },
+    "Leyadech.Core/1.0.0": {
+      "type": "project",
+      "path": "../Leyadech.Core/Leyadech.Core.csproj",
+      "msbuildProject": "../Leyadech.Core/Leyadech.Core.csproj"
+    },
+    "Leyadech.Data/1.0.0": {
+      "type": "project",
+      "path": "../Leyadech.Data/Leyadech.Data.csproj",
+      "msbuildProject": "../Leyadech.Data/Leyadech.Data.csproj"
+    },
+    "Leyadech.Service/1.0.0": {
+      "type": "project",
+      "path": "../Leyadech.Service/Leyadech.Service.csproj",
+      "msbuildProject": "../Leyadech.Service/Leyadech.Service.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "Leyadech.Core >= 1.0.0",
+      "Leyadech.Data >= 1.0.0",
+      "Leyadech.Service >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.5.0"
     ]
   },
@@ -443,11 +542,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\user1\\Documents\\מירי\\תכנות\\.NET core\\Leyadech\\Leyadech\\Leyadech.Api\\Leyadech.Api.csproj",
+      "projectUniqueName": "C:\\Users\\user1\\Documents\\Miri\\hw\\.NET core\\Leyadech\\Leyadech\\Leyadech.Api\\Leyadech.Api.csproj",
       "projectName": "Leyadech.Api",
-      "projectPath": "C:\\Users\\user1\\Documents\\מירי\\תכנות\\.NET core\\Leyadech\\Leyadech\\Leyadech.Api\\Leyadech.Api.csproj",
+      "projectPath": "C:\\Users\\user1\\Documents\\Miri\\hw\\.NET core\\Leyadech\\Leyadech\\Leyadech.Api\\Leyadech.Api.csproj",
       "packagesPath": "C:\\Users\\user1\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\user1\\Documents\\מירי\\תכנות\\.NET core\\Leyadech\\Leyadech\\Leyadech.Api\\obj\\",
+      "outputPath": "C:\\Users\\user1\\Documents\\Miri\\hw\\.NET core\\Leyadech\\Leyadech\\Leyadech.Api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -468,7 +567,17 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\user1\\Documents\\Miri\\hw\\.NET core\\Leyadech\\Leyadech\\Leyadech.Core\\Leyadech.Core.csproj": {
+              "projectPath": "C:\\Users\\user1\\Documents\\Miri\\hw\\.NET core\\Leyadech\\Leyadech\\Leyadech.Core\\Leyadech.Core.csproj"
+            },
+            "C:\\Users\\user1\\Documents\\Miri\\hw\\.NET core\\Leyadech\\Leyadech\\Leyadech.Data\\Leyadech.Data.csproj": {
+              "projectPath": "C:\\Users\\user1\\Documents\\Miri\\hw\\.NET core\\Leyadech\\Leyadech\\Leyadech.Data\\Leyadech.Data.csproj"
+            },
+            "C:\\Users\\user1\\Documents\\Miri\\hw\\.NET core\\Leyadech\\Leyadech\\Leyadech.Service\\Leyadech.Service.csproj": {
+              "projectPath": "C:\\Users\\user1\\Documents\\Miri\\hw\\.NET core\\Leyadech\\Leyadech\\Leyadech.Service\\Leyadech.Service.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

@@ -18,6 +18,9 @@
       "Leyadech.Core/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "CsvHelper": "33.0.1"
+        },
         "compile": {
           "bin/placeholder/Leyadech.Core.dll": {}
         },
@@ -75,11 +78,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\user1\\Documents\\מירי\\תכנות\\.NET core\\Leyadech\\Leyadech\\Leyadech.Data\\Leyadech.Data.csproj",
+      "projectUniqueName": "C:\\Users\\user1\\Documents\\Miri\\hw\\.NET core\\Leyadech\\Leyadech\\Leyadech.Data\\Leyadech.Data.csproj",
       "projectName": "Leyadech.Data",
-      "projectPath": "C:\\Users\\user1\\Documents\\מירי\\תכנות\\.NET core\\Leyadech\\Leyadech\\Leyadech.Data\\Leyadech.Data.csproj",
+      "projectPath": "C:\\Users\\user1\\Documents\\Miri\\hw\\.NET core\\Leyadech\\Leyadech\\Leyadech.Data\\Leyadech.Data.csproj",
       "packagesPath": "C:\\Users\\user1\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\user1\\Documents\\מירי\\תכנות\\.NET core\\Leyadech\\Leyadech\\Leyadech.Data\\obj\\",
+      "outputPath": "C:\\Users\\user1\\Documents\\Miri\\hw\\.NET core\\Leyadech\\Leyadech\\Leyadech.Data\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -101,8 +104,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\user1\\Documents\\מירי\\תכנות\\.NET core\\Leyadech\\Leyadech\\Leyadech.Core\\Leyadech.Core.csproj": {
-              "projectPath": "C:\\Users\\user1\\Documents\\מירי\\תכנות\\.NET core\\Leyadech\\Leyadech\\Leyadech.Core\\Leyadech.Core.csproj"
+            "C:\\Users\\user1\\Documents\\Miri\\hw\\.NET core\\Leyadech\\Leyadech\\Leyadech.Core\\Leyadech.Core.csproj": {
+              "projectPath": "C:\\Users\\user1\\Documents\\Miri\\hw\\.NET core\\Leyadech\\Leyadech\\Leyadech.Core\\Leyadech.Core.csproj"
             }
           }
         }

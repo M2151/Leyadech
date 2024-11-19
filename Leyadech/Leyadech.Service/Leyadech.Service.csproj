@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Leyadech.Core\Leyadech.Core.csproj" />
+  </ItemGroup>
+
 </Project>
