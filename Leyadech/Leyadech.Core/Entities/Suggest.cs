@@ -1,6 +1,6 @@
 ﻿namespace Leyadech.Core.Entities
 {
-    public class HelpSuggest:Application
+    public class Suggest:Application
     {
         public bool IsFlexible { get; set; }
         

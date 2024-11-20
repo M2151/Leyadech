@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Leyadech.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+95498202a950ba70207c4e73336d077877bf765f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f5623aa5f678c61162cfbbfe10d669d8ac3e4512")]
 [assembly: System.Reflection.AssemblyProductAttribute("Leyadech.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Leyadech.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

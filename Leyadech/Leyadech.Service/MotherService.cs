@@ -37,10 +37,10 @@ namespace Leyadech.Service
                 return Result<bool>.BadRequest("One or more required fields are missing");
             if (!IsValidFields(mother))
                 return Result<bool>.BadRequest("One or more fields are not valid");
-            var mothers = _motherRepository.GetList();
-            mother.Id = mothers.Any() ? mothers.Max(mother => mother.Id) + 1 : 1;
             mother.JoinDate = DateOnly.FromDateTime(DateTime.Today);
             SetMotherStatus(mother);
+            if (mother.SpecialRequests == null)
+                mother.SpecialRequests = new List<string>();
             var result = _motherRepository.Add(mother);
             if (!result)
                 return Result<bool>.Failure("Failed to add mother");
@@ -70,12 +70,11 @@ namespace Leyadech.Service
         }
         public Result<bool> AddSpecialRequest(int id, string request)
         {
-            //not complete
             var mother = _motherRepository.GetById(id);
             if (mother == null) return Result<bool>.NotFound($"Id {id} is not found");
             if (mother.SpecialRequests == null)
                 mother.SpecialRequests = new List<string>();
-            mother.SpecialRequests.Add(request);
+            var result=_motherRepository.AddSpecRequest(id, request);
             return Result<bool>.Success(true);
         }
         public bool IsValidFields(Mother mother)

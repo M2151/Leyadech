@@ -9,15 +9,17 @@ namespace Leyadech.Core.Repositories
 {
     public interface IMotherRepository
     {
-        public IEnumerable<Mother> GetList();
+         IEnumerable<Mother> GetList();
 
-        public Mother? GetById(int id);
+         Mother? GetById(int id);
 
-        public bool Add(Mother mother);
+         bool Add(Mother mother);
 
-        public bool Delete(int id);
+         bool Delete(int id);
 
-        public bool Update(int id,Mother mother);
-        
+         bool Update(int id, Mother mother);
+         bool AddSpecRequest(int id, string req);
+
+
     }
 }

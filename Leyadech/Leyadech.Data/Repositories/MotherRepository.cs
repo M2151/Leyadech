@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Leyadech.Data.Repositories
 {
-    public class MotherRepository:IMotherRepository
+    public class MotherRepository : IMotherRepository
     {
         private readonly DataContext _dataContext;
         public MotherRepository(DataContext dataContext)
@@ -21,10 +21,14 @@ namespace Leyadech.Data.Repositories
         }
         public Mother? GetById(int id)
         {
-            return _dataContext.MotherData.Find(m => m.Id == id);
+            return _dataContext.MotherData.FirstOrDefault(m => m.Id == id);
         }
         public bool Add(Mother mother)
         {
+            mother.Id = _dataContext.MotherData.Any()
+               ? _dataContext.MotherData.Max(mother => mother.Id) + 1
+                : 1;
+
             _dataContext.MotherData.Add(mother);
             return _dataContext.SaveMotherData();
         }
@@ -40,6 +44,13 @@ namespace Leyadech.Data.Repositories
             Mother? original = GetById(id);
             if (original == null) return false;
             SetFields(original, mother);
+            return _dataContext.SaveMotherData();
+        }
+        public bool AddSpecRequest(int id, string req)
+        {
+            Mother? mother = GetById(id);
+            if (mother == null) return false;
+            mother.SpecialRequests.Add(req);
             return _dataContext.SaveMotherData();
         }
         private void SetFields(Mother originalMo, Mother newMo)

@@ -1,6 +1,6 @@
 ﻿namespace Leyadech.Core.Entities
 {
-    public class HelpRequest:Application
+    public class Request:Application
     {
         //public DateOnly DateStart { get; set; }
         //public DateOnly DateEnd { get; set; }

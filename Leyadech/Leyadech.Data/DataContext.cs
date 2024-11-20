@@ -1,7 +1,7 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using Leyadech.Core.Entities;
-using Leyadech.Core.Mapping;
+using Leyadech.Data.Mapping;
 using System.Formats.Asn1;
 using System.Globalization;
 
@@ -12,8 +12,8 @@ namespace Leyadech.Data
         private readonly DataPathes _path;
         public List<Mother> MotherData { get; set; }
         public List<Volunteer> VolunteerData { get; set; }
-        public List<HelpRequest> RequestData { get; set; }
-        public List<HelpSuggest> SuggestData { get; set; }
+        public List<Request> RequestData { get; set; }
+        public List<Suggest> SuggestData { get; set; }
         public List<Volunteering> VolunteeringData { get; set; }
         public DataContext(DataPathes path)
         {
@@ -70,11 +70,11 @@ namespace Leyadech.Data
                     using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
                         csv.Context.RegisterClassMap<RequestMap>();
-                        RequestData = csv.GetRecords<HelpRequest>().ToList();
+                        RequestData = csv.GetRecords<Request>().ToList();
                     }
                 }
                 else
-                    RequestData = new List<HelpRequest>();
+                    RequestData = new List<Request>();
                 return true;
             }
             catch
@@ -92,11 +92,11 @@ namespace Leyadech.Data
                     using (var reader = new StreamReader(_path.SuggestPath))
                     using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
-                        SuggestData = csv.GetRecords<HelpSuggest>().ToList();
+                        SuggestData = csv.GetRecords<Suggest>().ToList();
                     }
                 }
                 else
-                    SuggestData=new List<HelpSuggest>();
+                    SuggestData=new List<Suggest>();
                 return true;
             }
             catch

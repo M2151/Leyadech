@@ -10,6 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddScoped<IMotherRepository, MotherRepository>();
 builder.Services.AddScoped<IMotherService,MotherService>();
+builder.Services.AddScoped<IVolunteerRepository, VolunteerRepository>();
+builder.Services.AddScoped<IVolunteerService, VolunteerService>();
+builder.Services.AddScoped<IVolunteeringRepository, VolunteeringRepository>();
+builder.Services.AddScoped<ISuggestRepository, SuggestRepository>();
+builder.Services.AddScoped<IRequestRepository, RequestRepository>();
 builder.Services.AddSingleton<DataContext>();
 builder.Services.AddSingleton<DataPathes>();
 builder.Services.AddControllers();

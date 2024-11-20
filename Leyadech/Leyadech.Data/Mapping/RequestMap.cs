@@ -1,9 +1,9 @@
 ﻿using CsvHelper.Configuration;
 using Leyadech.Core.Entities;
 
-namespace Leyadech.Core.Mapping
+namespace Leyadech.Data.Mapping
 {
-    public class RequestMap:ClassMap<HelpRequest>
+    public class RequestMap:ClassMap<Request>
     {
         public RequestMap()
         {
