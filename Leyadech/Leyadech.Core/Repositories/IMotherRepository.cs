@@ -18,7 +18,7 @@ namespace Leyadech.Core.Repositories
          bool Delete(int id);
 
          bool Update(int id, Mother mother);
-         bool AddSpecRequest(int id, string req);
+         //bool AddSpecRequest(int id, string req);
 
 
     }

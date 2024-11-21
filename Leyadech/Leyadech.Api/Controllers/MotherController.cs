@@ -10,7 +10,7 @@ namespace Leyadech.Api.Controllers
     /// </summary>
     [ApiController]
     [Route("api/[controller]")]
-    public class MotherController : Controller
+    public class MotherController : ControllerBase
     {
         private readonly IMotherService _motherService;
 
@@ -84,26 +84,6 @@ namespace Leyadech.Api.Controllers
 
             return NoContent();
         }
-
-        /// <summary>
-        /// Updates the special request for a specific mother.
-        /// </summary>
-        /// <param name="id">The ID of the mother.</param>
-        /// <param name="request">The special request.</param>
-        /// <returns>Success status.</returns>
-        [HttpPut("{id}/specialRequest")]
-        public ActionResult<bool> UpdateSpecRequests(int id, [FromBody] string request)
-        {
-            if (string.IsNullOrWhiteSpace(request))
-                return BadRequest("Special request data is required.");
-
-            var result = _motherService.AddSpecialRequest(id, request);
-            if (!result.IsSuccess)
-                return StatusCode(result.StatusCode, result.ErrorMessage);
-
-            return NoContent();
-        }
-
         /// <summary>
         /// Deletes a mother by ID.
         /// </summary>
@@ -118,5 +98,26 @@ namespace Leyadech.Api.Controllers
 
             return NoContent();
         }
+
+        /// <summary>
+        /// Updates the special request for a specific mother.
+        /// </summary>
+        /// <param name="id">The ID of the mother.</param>
+        /// <param name="request">The special request.</param>
+        /// <returns>Success status.</returns>
+        //[HttpPut("{id}/specialRequest")]
+        //public ActionResult<bool> UpdateSpecRequests(int id, [FromBody] string request)
+        //{
+        //    if (string.IsNullOrWhiteSpace(request))
+        //        return BadRequest("Special request data is required.");
+
+        //    var result = _motherService.AddSpecialRequest(id, request);
+        //    if (!result.IsSuccess)
+        //        return StatusCode(result.StatusCode, result.ErrorMessage);
+
+        //    return NoContent();
+        //}
+
+
     }
 }

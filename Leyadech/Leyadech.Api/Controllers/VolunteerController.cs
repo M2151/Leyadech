@@ -11,7 +11,7 @@ namespace Leyadech.Api.Controllers
     /// </summary>
     [ApiController]
     [Route("api/[controller]")]
-    public class VolunteerController : Controller
+    public class VolunteerController : ControllerBase
     {
         private readonly IVolunteerService _volunteerService;
 

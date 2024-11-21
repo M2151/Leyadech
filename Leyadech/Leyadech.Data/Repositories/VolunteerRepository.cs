@@ -51,6 +51,13 @@ namespace Leyadech.Data.Repositories
             SetFields(original, volunteer);
             return _dataContext.SaveVolunteerData();
         }
+        //public bool UpdateStatus(int id, EVolunteerStatus status)
+        //{
+        //    Volunteer? volunteer = GetById(id);
+        //    if (volunteer == null) return false;
+        //    volunteer.Status = status;
+        //    return _dataContext.SaveVolunteerData();
+        //}
 
         private void SetFields(Volunteer original, Volunteer updated)
         {
@@ -63,12 +70,7 @@ namespace Leyadech.Data.Repositories
             original.Status = updated.Status;
         }
 
-        public bool UpdateStatus(int id, EVolunteerStatus status)
-        {
-            Volunteer? volunteer = GetById(id);
-            if (volunteer == null) return false;
-            volunteer.Status = status;
-            return _dataContext.SaveVolunteerData();
-        }
+
+       
     }
 }

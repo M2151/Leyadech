@@ -9,7 +9,7 @@ namespace Leyadech.Core.Repositories
         bool Add(Volunteer volunteer);
         bool Delete(int id);
         bool Update(int id, Volunteer volunteer);
-        bool UpdateStatus(int id, EVolunteerStatus status);
+       // bool UpdateStatus(int id, EVolunteerStatus status);
 
     }
 }

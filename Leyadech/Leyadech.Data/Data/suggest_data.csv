@@ -1,0 +1,5 @@
+IsFlexible,Frequency,ApplicationId,UserId,HelpKind,Description,ApplicationDate,IsRelevant
+True,Disposable,1,1,Cleaning,string,11/21/2024 19:02:00,True
+True,Disposable,2,1,Cleaning,string,11/21/2024 19:16:02,True
+True,Disposable,3,2,Cleaning,string,11/21/2024 19:16:02,True
+True,Disposable,4,3,Cleaning,string,11/21/2024 19:16:02,True

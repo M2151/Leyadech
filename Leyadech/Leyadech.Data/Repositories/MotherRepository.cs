@@ -46,13 +46,13 @@ namespace Leyadech.Data.Repositories
             SetFields(original, mother);
             return _dataContext.SaveMotherData();
         }
-        public bool AddSpecRequest(int id, string req)
-        {
-            Mother? mother = GetById(id);
-            if (mother == null) return false;
-            mother.SpecialRequests.Add(req);
-            return _dataContext.SaveMotherData();
-        }
+        //public bool AddSpecRequest(int id, string req)
+        //{
+        //    Mother? mother = GetById(id);
+        //    if (mother == null) return false;
+        //    mother.SpecialRequests.Add(req);
+        //    return _dataContext.SaveMotherData();
+        //}
         private void SetFields(Mother originalMo, Mother newMo)
         {
             originalMo.Address = newMo.Address;

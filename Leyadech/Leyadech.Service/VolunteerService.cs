@@ -72,14 +72,14 @@ namespace Leyadech.Service
             return Result<bool>.BadRequest("Failed to delete volunteer");
         }
 
-        public Result<bool> UpdateVolunteerStatus(int id, EVolunteerStatus status)
-        {
-            if (_volunteerRepository.GetById(id) == null)
-                return Result<bool>.NotFound($"Id {id} is not found");
-            var result = _volunteerRepository.UpdateStatus(id, status);
-            if (result) return Result<bool>.Success(true);
-            return Result<bool>.Failure("Failed to update status");
-        }
+        //public Result<bool> UpdateVolunteerStatus(int id, EVolunteerStatus status)
+        //{
+        //    if (_volunteerRepository.GetById(id) == null)
+        //        return Result<bool>.NotFound($"Id {id} is not found");
+        //    var result = _volunteerRepository.UpdateStatus(id, status);
+        //    if (result) return Result<bool>.Success(true);
+        //    return Result<bool>.Failure("Failed to update status");
+        //}
         public Result<IEnumerable<Volunteering>> GetAllVolunteeringsById(int id)
         {
             var result = _volunteeringRepository.GetList()

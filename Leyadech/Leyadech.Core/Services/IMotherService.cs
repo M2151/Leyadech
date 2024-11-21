@@ -14,7 +14,7 @@ namespace Leyadech.Core.Services
         public Result<bool> AddMother(Mother mother);
         public Result<bool> UpdateMother(int id, Mother mother);
         public Result<bool> DeleteMother(int id);
-        public Result<bool> AddSpecialRequest(int id, string request);
+        //public Result<bool> AddSpecialRequest(int id, string request);
 
 
 

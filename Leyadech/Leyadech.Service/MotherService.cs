@@ -68,15 +68,15 @@ namespace Leyadech.Service
             if (result) return Result<bool>.Success(result);
             return Result<bool>.Failure("Failed to delete mother");
         }
-        public Result<bool> AddSpecialRequest(int id, string request)
-        {
-            var mother = _motherRepository.GetById(id);
-            if (mother == null) return Result<bool>.NotFound($"Id {id} is not found");
-            if (mother.SpecialRequests == null)
-                mother.SpecialRequests = new List<string>();
-            var result=_motherRepository.AddSpecRequest(id, request);
-            return Result<bool>.Success(true);
-        }
+        //public Result<bool> AddSpecialRequest(int id, string request)
+        //{
+        //    var mother = _motherRepository.GetById(id);
+        //    if (mother == null) return Result<bool>.NotFound($"Id {id} is not found");
+        //    if (mother.SpecialRequests == null)
+        //        mother.SpecialRequests = new List<string>();
+        //    var result=_motherRepository.AddSpecRequest(id, request);
+        //    return Result<bool>.Success(true);
+        //}
         public bool IsValidFields(Mother mother)
         {
             DateOnly today = DateOnly.FromDateTime(DateTime.Today);

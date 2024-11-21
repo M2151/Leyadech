@@ -49,7 +49,7 @@ namespace Leyadech.Core.Services
         /// <param name="id">The ID of the volunteer to update.</param>
         /// <param name="status">The new status of the volunteer.</param>
         /// <returns>A result indicating whether the operation was successful.</returns>
-        Result<bool> UpdateVolunteerStatus(int id, EVolunteerStatus status);
+        //Result<bool> UpdateVolunteerStatus(int id, EVolunteerStatus status);
 
         /// <summary>
         /// Retrieves all volunteering activities associated with a volunteer's ID.
