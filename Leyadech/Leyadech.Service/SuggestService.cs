@@ -7,10 +7,10 @@ namespace Leyadech.Service
 {
     public class SuggestService : ISuggestService
     {
-        private readonly ISuggestRepository _suggestRepository;
-        private readonly IVolunteerRepository _volunteerRepository;
+        private readonly IRepository<Suggest> _suggestRepository;
+        private readonly IRepository<Volunteer> _volunteerRepository;
 
-        public SuggestService(ISuggestRepository suggestRepository, IVolunteerRepository volunteerRepository)
+        public SuggestService(IRepository<Suggest> suggestRepository, IRepository<Volunteer> volunteerRepository)
         {
             _suggestRepository = suggestRepository;
             _volunteerRepository = volunteerRepository;

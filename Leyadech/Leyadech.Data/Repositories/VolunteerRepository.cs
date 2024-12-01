@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Leyadech.Data.Repositories
 {
-    public class VolunteerRepository : IVolunteerRepository
+    public class VolunteerRepository : IRepository<Volunteer>
     {
         private readonly DataContext _dataContext;
 

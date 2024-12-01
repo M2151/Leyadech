@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Leyadech.Data.Repositories
 {
-    public class SuggestRepository : ISuggestRepository
+    public class SuggestRepository : IRepository<Suggest>
     {
         private readonly DataContext _dataContext;
 

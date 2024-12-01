@@ -11,8 +11,8 @@ namespace Leyadech.Service
 {
     public class MotherService : UserService, IMotherService
     {
-        private readonly IMotherRepository _motherRepository;
-        public MotherService(IMotherRepository motherRepository)
+        private readonly IRepository<Mother> _motherRepository;
+        public MotherService(IRepository<Mother> motherRepository)
         {
             _motherRepository = motherRepository;
         }

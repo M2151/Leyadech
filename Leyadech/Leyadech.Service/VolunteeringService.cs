@@ -7,11 +7,11 @@ namespace Leyadech.Service
 {
     public class VolunteeringService : IVolunteeringService
     {
-        private readonly IVolunteeringRepository _volunteeringRepository;
-        private readonly ISuggestRepository _suggestRepository;
-        private readonly IRequestRepository _requestRepository;
+        private readonly IRepository<Volunteering> _volunteeringRepository;
+        private readonly IRepository<Suggest> _suggestRepository;
+        private readonly IRepository<Request> _requestRepository;
 
-        public VolunteeringService(IVolunteeringRepository volunteeringRepository,ISuggestRepository suggestRepository,IRequestRepository requestRepository)
+        public VolunteeringService(IRepository<Volunteering> volunteeringRepository, IRepository<Suggest> suggestRepository, IRepository<Request> requestRepository)
         {
             _volunteeringRepository = volunteeringRepository;
             _suggestRepository = suggestRepository;

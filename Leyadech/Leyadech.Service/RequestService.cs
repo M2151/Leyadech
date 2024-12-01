@@ -7,9 +7,9 @@ namespace Leyadech.Service
 {
     public class RequestService : IRequestService
     {
-        private readonly IRequestRepository _requestRepository;
-        private readonly IMotherRepository _motherRepository;
-        public RequestService(IRequestRepository requestRepository, IMotherRepository motherRepository)
+        private readonly IRepository<Request> _requestRepository;
+        private readonly IRepository<Mother> _motherRepository;
+        public RequestService(IRepository<Request> requestRepository, IRepository<Mother> motherRepository)
         {
             _requestRepository = requestRepository;
             _motherRepository = motherRepository;

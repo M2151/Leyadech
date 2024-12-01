@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Leyadech.Data.Repositories
 {
-    public class MotherRepository : IMotherRepository
+    public class MotherRepository : IRepository<Mother>
     {
         private readonly DataContext _dataContext;
         public MotherRepository(DataContext dataContext)

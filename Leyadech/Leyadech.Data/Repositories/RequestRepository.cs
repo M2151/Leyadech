@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Leyadech.Data.Repositories
 {
-    public class RequestRepository : IRequestRepository
+    public class RequestRepository : IRepository<Request>
     {
         private readonly DataContext _dataContext;
 
