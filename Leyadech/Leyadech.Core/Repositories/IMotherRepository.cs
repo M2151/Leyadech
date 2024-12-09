@@ -7,17 +7,9 @@ using System.Threading.Tasks;
 
 namespace Leyadech.Core.Repositories
 {
-    public interface IMotherRepository
+    public interface IMotherRepository:IRepository<Mother>
     {
-         IEnumerable<Mother> GetList();
-
-         Mother? GetById(int id);
-
-         bool Add(Mother mother);
-
-         bool Delete(int id);
-
-         bool Update(int id, Mother mother);
+         
          //bool AddSpecRequest(int id, string req);
 
 

@@ -1,10 +1,18 @@
-﻿namespace Leyadech.Core.Entities
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Leyadech.Core.Entities
 {
+
     public enum EFrequency { Disposable,Daily,Weekly,Monthly,Other }
+    [Table("Volunteering")]
     public class Volunteering
     {
+        [Key]
         public int VolunteeringId { get; set; }
+        [ForeignKey("Request")]
         public int RequestId { get; set; }
+        [ForeignKey("Suggest")]
         public int SuggestId { get; set; }
         public string? Description { get; set; }
         public EHelpKind? HelpKind { get; set; }

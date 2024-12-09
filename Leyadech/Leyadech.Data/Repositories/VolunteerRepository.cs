@@ -5,52 +5,10 @@ using System.Linq;
 
 namespace Leyadech.Data.Repositories
 {
-    public class VolunteerRepository : IRepository<Volunteer>
+    public class VolunteerRepository : Repository<Volunteer>, IVolunteerRepository
     {
-        private readonly DataContext _dataContext;
 
-        public VolunteerRepository(DataContext dataContext)
-        {
-            _dataContext = dataContext;
-        }
-
-        public IEnumerable<Volunteer> GetList()
-        {
-            return _dataContext.VolunteerData;
-        }
-
-        public Volunteer? GetById(int id)
-        {
-            return _dataContext.VolunteerData.FirstOrDefault(v => v.Id == id);
-        }
-
-        public bool Add(Volunteer volunteer)
-        {
-            volunteer.Id = _dataContext.VolunteerData.Any()
-                ? _dataContext.VolunteerData.Max(v => v.Id) + 1
-                : 1;
-
-            _dataContext.VolunteerData.Add(volunteer);
-            return _dataContext.SaveVolunteerData();
-        }
-
-        public bool Delete(int id)
-        {
-            Volunteer? volunteer = GetById(id);
-            if (volunteer == null) return false;
-
-            _dataContext.VolunteerData.Remove(volunteer);
-            return _dataContext.SaveVolunteerData();
-        }
-
-        public bool Update(int id, Volunteer volunteer)
-        {
-            Volunteer? original = GetById(id);
-            if (original == null) return false;
-
-            SetFields(original, volunteer);
-            return _dataContext.SaveVolunteerData();
-        }
+        public VolunteerRepository(DataContext dataContext) : base(dataContext) { }
         //public bool UpdateStatus(int id, EVolunteerStatus status)
         //{
         //    Volunteer? volunteer = GetById(id);

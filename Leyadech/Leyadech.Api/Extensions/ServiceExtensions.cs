@@ -31,9 +31,7 @@ namespace Leyadech.Api.Extensions
             services.AddScoped<ISuggestService, SuggestService>();
             services.AddScoped<IRequestService, RequestService>();
 
-            // Register DataContext as a singleton
-            services.AddSingleton<DataContext>();
-            services.AddSingleton<DataPathes>();
+            services.AddDbContext<DataContext>();
         }
     }
 }
