@@ -2,6 +2,7 @@
 using Leyadech.Data.Converters;
 using Leyadech.Data.Mapping;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Formats.Asn1;
 using System.Globalization;
 using System.Text.Json;
@@ -10,14 +11,16 @@ namespace Leyadech.Data
 {
     public class DataContext : DbContext
     {
-        //public DbSet<Mother> MotherData { get; set; }
-        //public DbSet<Volunteer> VolunteerData { get; set; }
-        //public DbSet<Request> RequestData { get; set; }
-        //public DbSet<Suggest> SuggestData { get; set; }
-        //public DbSet<Volunteering> VolunteeringData { get; set; }
+        public DbSet<Mother> MotherData { get; set; }
+        public DbSet<Volunteer> VolunteerData { get; set; }
+        public DbSet<Request> RequestData { get; set; }
+        public DbSet<Suggest> SuggestData { get; set; }
+        public DbSet<Volunteering> VolunteeringData { get; set; }
+        public DataContext(DbContextOptions<DataContext> options) : base(options) { }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=sample_db");
+            optionsBuilder.LogTo(mesege => Console.WriteLine(":::"+mesege));
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -41,7 +44,13 @@ namespace Leyadech.Data
                 entity.Property(m => m.SpecialRequests)
                       .HasConversion(
                           v => JsonSerializer.Serialize(v, new JsonSerializerOptions()),
-                          v => JsonSerializer.Deserialize<List<string>>(v, new JsonSerializerOptions()));
+                          v => JsonSerializer.Deserialize<List<string>>(v, new JsonSerializerOptions()))
+                      .Metadata.SetValueComparer(
+                          new ValueComparer<List<string>>(
+                          (c1, c2) => c1.SequenceEqual(c2), // Compare two lists
+                          c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())), // Generate hash code
+                          c => c.ToList())); // Create a deep copy
+
             });
             modelBuilder.Entity<Application>(entity =>
             {
@@ -56,7 +65,12 @@ namespace Leyadech.Data
                 entity.Property(r => r.Preferences)
                     .HasConversion(
                          v => JsonSerializer.Serialize(v, new JsonSerializerOptions()),
-                         v => JsonSerializer.Deserialize<List<string>>(v, new JsonSerializerOptions()));
+                         v => JsonSerializer.Deserialize<List<string>>(v, new JsonSerializerOptions()))
+                    .Metadata.SetValueComparer(
+                       new ValueComparer<List<string>>(
+                       (c1, c2) => c1.SequenceEqual(c2), // Compare two lists
+                       c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())), // Generate hash code
+                       c => c.ToList())); // Create a deep copy
             });
 
 
@@ -65,7 +79,12 @@ namespace Leyadech.Data
                 entity.Property(s => s.RelevantDays)
                     .HasConversion(
                         v => JsonSerializer.Serialize(v, new JsonSerializerOptions()),
-                        v => JsonSerializer.Deserialize<List<DayOfWeek>>(v, new JsonSerializerOptions()));
+                        v => JsonSerializer.Deserialize<List<DayOfWeek>>(v, new JsonSerializerOptions()))
+                    .Metadata.SetValueComparer(
+                       new ValueComparer<List<DayOfWeek>>(
+                       (c1, c2) => c1.SequenceEqual(c2), // Compare two lists
+                       c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())), // Generate hash code
+                       c => c.ToList())); // Create a deep copy
             });
 
 

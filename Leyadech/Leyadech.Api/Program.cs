@@ -5,6 +5,7 @@ using Leyadech.Core.Services;
 using Leyadech.Data;
 using Leyadech.Data.Repositories;
 using Leyadech.Service;
+using Microsoft.EntityFrameworkCore;
 using static Leyadech.Data.DataContext;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+    });
 
 var app = builder.Build();
 

@@ -10,21 +10,21 @@ namespace Leyadech.Data.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly DbSet<T> _dbSet;
+        protected readonly DbSet<T> _dbSet;
         public Repository(DataContext dataContext)
         {
             _dbSet = dataContext.Set<T>();
         }
-        public bool Add(T entity)
+        public T? Add(T entity)
         {
             try
             {
                 _dbSet.Add(entity);
-                return true;
+                return entity;
             }
             catch (Exception ex)
             {
-                return false;
+                return null;
             }
 
         }
@@ -52,17 +52,37 @@ namespace Leyadech.Data.Repositories
             return _dbSet.ToList();
         }
 
-        public bool Update(int id, T entity)
+        public T? Update(int id, T entity)
         {
             try
             {
-                _dbSet.Update(entity);
-                return true;
+                T? source=GetById(id);
+                UpdateAllProperties(source, entity);
+                return entity;
             }
             catch (Exception ex)
             {
-                return false;
+                return null;
             }
         }
+
+        private void UpdateAllProperties(T target, T source)
+        {
+            if (target == null || source == null)
+                throw new ArgumentNullException("Target or source object is null.");
+
+            var properties = typeof(T).GetProperties();
+
+            foreach (var property in properties)
+            {
+                if (property.CanWrite&&property.Name!="Id") // Only update writable properties
+                {
+                    var value = property.GetValue(source);
+                    if (value != null)
+                        property.SetValue(target, value);
+                }
+            }
+        }
+
     }
 }

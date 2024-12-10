@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace Leyadech.Core.Repositories
 {
-    public interface IRepository<T>
+    public interface IRepository<T> where T : class
     {
         IEnumerable<T> GetList();
 
         T? GetById(int id);
 
-        bool Add(T entity);
+        T? Add(T entity);
 
         bool Delete(int id);
 
-        bool Update(int id, T entity);
+        T? Update(int id, T entity);
     }
 }

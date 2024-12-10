@@ -4,6 +4,7 @@ using Leyadech.Core.Services;
 using Leyadech.Data;
 using Leyadech.Data.Repositories;
 using Leyadech.Service;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using static Leyadech.Data.DataContext;
 
@@ -18,11 +19,13 @@ namespace Leyadech.Api.Extensions
         public static void ServiceDependencyInjector(this IServiceCollection services)
         {
             // Register repositories
-            services.AddScoped<IRepository<Mother>, MotherRepository>();
-            services.AddScoped<IRepository<Volunteer>, VolunteerRepository>();
-            services.AddScoped<IRepository<Volunteering>, VolunteeringRepository>();
-            services.AddScoped<IRepository<Suggest>, SuggestRepository>();
-            services.AddScoped<IRepository<Request>, RequestRepository>();
+            services.AddScoped<IMotherRepository, MotherRepository>();
+            services.AddScoped<IVolunteerRepository, VolunteerRepository>();
+            services.AddScoped<IVolunteeringRepository, VolunteeringRepository>();
+            services.AddScoped<ISuggestRepository, SuggestRepository>();
+            services.AddScoped<IRequestRepository, RequestRepository>();
+            services.AddScoped<IRepositoryManager, RepositoryManager>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             // Register services
             services.AddScoped<IMotherService, MotherService>();
@@ -31,7 +34,8 @@ namespace Leyadech.Api.Extensions
             services.AddScoped<ISuggestService, SuggestService>();
             services.AddScoped<IRequestService, RequestService>();
 
-            services.AddDbContext<DataContext>();
+            services.AddDbContext<DataContext>(
+                    options => options.UseSqlServer("Data Source = DESKTOP-1VUANBN; Initial Catalog = LeyadechDb; Integrated Security = true; "));
         }
     }
 }

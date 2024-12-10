@@ -7,26 +7,24 @@ namespace Leyadech.Service
 {
     public class RequestService : IRequestService
     {
-        private readonly IRepository<Request> _requestRepository;
-        private readonly IRepository<Mother> _motherRepository;
-        public RequestService(IRepository<Request> requestRepository, IRepository<Mother> motherRepository)
+        private readonly IRepositoryManager _repositoryManager;
+        public RequestService(IRepositoryManager repositoryManager)
         {
-            _requestRepository = requestRepository;
-            _motherRepository = motherRepository;
+            _repositoryManager = repositoryManager;
         }
 
         public Result<IEnumerable<Request>> GetAllRequests()
         {
-            var requests = _requestRepository.GetList();
+            var requests = _repositoryManager.Requests.GetList();
             return Result<IEnumerable<Request>>.Success(requests);
         }
 
         public Result<Request> GetRequestById(int id)
         {
-            var request = _requestRepository.GetById(id);
+            var request = _repositoryManager.Requests.GetById(id);
             if (request == null)
                 return Result<Request>.NotFound($"Request with Id {id} not found");
-
+            _repositoryManager.Save();
             return Result<Request>.Success(request);
         }
 
@@ -40,10 +38,10 @@ namespace Leyadech.Service
             if (!IsRequiredFields(request))
                 return Result<bool>.BadRequest("One or more required fields are missing");
 
-            var success = _requestRepository.Add(request);
-            if (!success)
+            var success = _repositoryManager.Requests.Add(request);
+            if (success == null)
                 return Result<bool>.Failure("Failed to add Request");
-
+            _repositoryManager.Save();
             return Result<bool>.Success(true);
         }
 
@@ -52,32 +50,31 @@ namespace Leyadech.Service
             if (request == null)
                 return Result<bool>.BadRequest("Cannot update null Request");
 
-            var existingRequest = _requestRepository.GetById(id);
+            var existingRequest = _repositoryManager.Requests.GetById(id);
             if (existingRequest == null)
                 return Result<bool>.NotFound($"Request with Id {id} not found");
 
             if (!IsValidFields(request))
                 return Result<bool>.BadRequest("One or more fields are not valid");
-            if (!IsRequiredFields(request))
-                return Result<bool>.BadRequest("One or more required fields are missing");
 
-            var success = _requestRepository.Update(id, request);
-            if (!success)
+
+            var success = _repositoryManager.Requests.Update(id, request);
+            if (success==null)
                 return Result<bool>.Failure("Failed to update Request");
-
+            _repositoryManager.Save();
             return Result<bool>.Success(true);
         }
 
         public Result<bool> DeleteRequest(int id)
         {
-            var existingRequest = _requestRepository.GetById(id);
+            var existingRequest = _repositoryManager.Requests.GetById(id);
             if (existingRequest == null)
                 return Result<bool>.NotFound($"Request with Id {id} not found");
 
-            var success = _requestRepository.Delete(id);
+            var success = _repositoryManager.Requests.Delete(id);
             if (!success)
                 return Result<bool>.Failure("Failed to delete Request");
-
+            _repositoryManager.Save();
             return Result<bool>.Success(true);
         }
 
@@ -89,7 +86,7 @@ namespace Leyadech.Service
         }
         private bool IsValidFields(Request request)
         {
-            if (_motherRepository.GetById(request.UserId) == null) return false;
+            if (_repositoryManager.Mothers.GetById(request.UserId) == null) return false;
             return true;
         }
     }

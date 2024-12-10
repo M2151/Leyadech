@@ -11,19 +11,19 @@ namespace Leyadech.Service
 {
     public class MotherService : UserService, IMotherService
     {
-        private readonly IRepository<Mother> _motherRepository;
-        public MotherService(IRepository<Mother> motherRepository)
+        private readonly IRepositoryManager _repositoryManager;
+        public MotherService(IRepositoryManager repositoryManager)
         {
-            _motherRepository = motherRepository;
+            _repositoryManager = repositoryManager;
         }
         public Result<IEnumerable<Mother>> GetAllMothers()
         {
-            return Result<IEnumerable<Mother>>.Success(_motherRepository.GetList());
+            return Result<IEnumerable<Mother>>.Success(_repositoryManager.Mothers.GetList());
 
         }
         public Result<Mother> GetMotherById(int id)
         {
-            var mother = _motherRepository.GetById(id);
+            var mother = _repositoryManager.Mothers.GetById(id);
             if (mother == null)
                 return Result<Mother>.NotFound("mother not found");
             return Result<Mother>.Success(mother);
@@ -41,32 +41,34 @@ namespace Leyadech.Service
             SetMotherStatus(mother);
             if (mother.SpecialRequests == null)
                 mother.SpecialRequests = new List<string>();
-            var result = _motherRepository.Add(mother);
-            if (!result)
+            var result = _repositoryManager.Mothers.Add(mother);
+            if (result==null)
                 return Result<bool>.Failure("Failed to add mother");
-            return Result<bool>.Success(result);
+            _repositoryManager.Save();
+            return Result<bool>.Success(true);
         }
         public Result<bool> UpdateMother(int id, Mother mother)
         {
             if (mother == null)
                 return Result<bool>.BadRequest("Cannot update mother to null reference");
-            if (!IsRequiredFields(mother))
-                return Result<bool>.BadRequest("One or more required fields are missing");
             if (!IsValidFields(mother))
                 return Result<bool>.BadRequest("One or more fields are not valid");
-            if (_motherRepository.GetById(id) == null)
+            if (_repositoryManager.Mothers.GetById(id) == null)
                 return Result<bool>.NotFound($"Id {id} is not found");
-            var result = _motherRepository.Update(id, mother);
-            if (result) return Result<bool>.Success(result);
-            return Result<bool>.Failure("Failed to update mother");
+            var result = _repositoryManager.Mothers.Update(id, mother);
+            if (result == null) return Result<bool>.Failure("Failed to update mother");
+            _repositoryManager.Save();
+            return Result<bool>.Success(true);
+
         }
         public Result<bool> DeleteMother(int id)
         {
-            if (_motherRepository.GetById(id) == null)
+            if (_repositoryManager.Mothers.GetById(id) == null)
                 return Result<bool>.NotFound($"Id {id} is not found");
-            var result = _motherRepository.Delete(id);
-            if (result) return Result<bool>.Success(result);
-            return Result<bool>.Failure("Failed to delete mother");
+            var result = _repositoryManager.Mothers.Delete(id);
+            if (!result) return Result<bool>.Failure("Failed to delete mother");
+            _repositoryManager.Save();
+            return Result<bool>.Success(result);
         }
         //public Result<bool> AddSpecialRequest(int id, string request)
         //{

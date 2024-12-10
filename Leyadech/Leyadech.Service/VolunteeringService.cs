@@ -7,26 +7,23 @@ namespace Leyadech.Service
 {
     public class VolunteeringService : IVolunteeringService
     {
-        private readonly IRepository<Volunteering> _volunteeringRepository;
-        private readonly IRepository<Suggest> _suggestRepository;
-        private readonly IRepository<Request> _requestRepository;
+        private readonly IRepositoryManager _repositoryManager;
 
-        public VolunteeringService(IRepository<Volunteering> volunteeringRepository, IRepository<Suggest> suggestRepository, IRepository<Request> requestRepository)
+
+        public VolunteeringService(IRepositoryManager repositoryManager)
         {
-            _volunteeringRepository = volunteeringRepository;
-            _suggestRepository = suggestRepository;
-            _requestRepository = requestRepository;
+            _repositoryManager = repositoryManager;
         }
 
         public Result<IEnumerable<Volunteering>> GetAllVolunteerings()
         {
-            var volunteerings = _volunteeringRepository.GetList();
+            var volunteerings = _repositoryManager.Volunteerings.GetList();
             return Result<IEnumerable<Volunteering>>.Success(volunteerings);
         }
 
         public Result<Volunteering> GetVolunteeringById(int id)
         {
-            var volunteering = _volunteeringRepository.GetById(id);
+            var volunteering = _repositoryManager.Volunteerings.GetById(id);
             if (volunteering == null)
                 return Result<Volunteering>.NotFound($"Volunteering with Id {id} not found");
 
@@ -43,10 +40,10 @@ namespace Leyadech.Service
             if (!IsRequiredFields(volunteering))
                 return Result<bool>.BadRequest("One or more required fields are missing");
 
-            var success = _volunteeringRepository.Add(volunteering);
-            if (!success)
+            var success = _repositoryManager.Volunteerings.Add(volunteering);
+            if (success == null)
                 return Result<bool>.Failure("Failed to add Volunteering");
-
+            _repositoryManager.Save();
             return Result<bool>.Success(true);
         }
 
@@ -55,32 +52,31 @@ namespace Leyadech.Service
             if (volunteering == null)
                 return Result<bool>.BadRequest("Cannot update null Volunteering");
 
-            var existingVolunteering = _volunteeringRepository.GetById(id);
+            var existingVolunteering = _repositoryManager.Volunteerings.GetById(id);
             if (existingVolunteering == null)
                 return Result<bool>.NotFound($"Volunteering with Id {id} not found");
 
             if (!IsValidFields(volunteering))
                 return Result<bool>.BadRequest("One or more fields are not valid");
-            if (!IsRequiredFields(volunteering))
-                return Result<bool>.BadRequest("One or more required fields are missing");
 
-            var success = _volunteeringRepository.Update(id, volunteering);
-            if (!success)
+
+            var success = _repositoryManager.Volunteerings.Update(id, volunteering);
+            if (success == null)
                 return Result<bool>.Failure("Failed to update Volunteering");
-
+            _repositoryManager.Save();
             return Result<bool>.Success(true);
         }
 
         public Result<bool> DeleteVolunteering(int id)
         {
-            var existingVolunteering = _volunteeringRepository.GetById(id);
+            var existingVolunteering = _repositoryManager.Volunteerings.GetById(id);
             if (existingVolunteering == null)
                 return Result<bool>.NotFound($"Volunteering with Id {id} not found");
 
-            var success = _volunteeringRepository.Delete(id);
+            var success = _repositoryManager.Volunteerings.Delete(id);
             if (!success)
                 return Result<bool>.Failure("Failed to delete Volunteering");
-
+            _repositoryManager.Save();
             return Result<bool>.Success(true);
         }
 
@@ -92,8 +88,8 @@ namespace Leyadech.Service
                 return false;
             if (vol.TimeEnd < vol.TimeStart)
                 return false;
-            if (_suggestRepository.GetById(vol.SuggestId) == null) return false;
-            if (_requestRepository.GetById(vol.RequestId) == null) return false;
+            if (_repositoryManager.Suggests.GetById(vol.SuggestId) == null) return false;
+            if (_repositoryManager.Requests.GetById(vol.RequestId) == null) return false;
             return true;
         }
         private bool IsRequiredFields(Volunteering vol)
