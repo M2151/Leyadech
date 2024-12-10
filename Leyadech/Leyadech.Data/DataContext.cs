@@ -1,6 +1,5 @@
 ﻿using Leyadech.Core.Entities;
 using Leyadech.Data.Converters;
-using Leyadech.Data.Mapping;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Formats.Asn1;

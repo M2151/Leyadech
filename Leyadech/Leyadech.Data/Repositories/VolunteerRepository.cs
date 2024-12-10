@@ -17,16 +17,7 @@ namespace Leyadech.Data.Repositories
         //    return _dataContext.SaveVolunteerData();
         //}
 
-        private void SetFields(Volunteer original, Volunteer updated)
-        {
-            original.Email = updated.Email;
-            original.FirstName = updated.FirstName;
-            original.LastName = updated.LastName;
-            original.PhoneNumber = updated.PhoneNumber;
-            original.Address = updated.Address;
-            original.HelpKindSuggested = updated.HelpKindSuggested;
-            original.Status = updated.Status;
-        }
+       
 
 
        

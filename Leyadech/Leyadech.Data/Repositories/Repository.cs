@@ -2,7 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -75,7 +77,7 @@ namespace Leyadech.Data.Repositories
 
             foreach (var property in properties)
             {
-                if (property.CanWrite&&property.Name!="Id") // Only update writable properties
+                if (property.CanWrite&& property.GetCustomAttribute<KeyAttribute>() == null) 
                 {
                     var value = property.GetValue(source);
                     if (value != null)

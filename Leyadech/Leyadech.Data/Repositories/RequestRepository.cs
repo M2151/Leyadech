@@ -9,14 +9,6 @@ namespace Leyadech.Data.Repositories
     {
         public RequestRepository(DataContext dataContext) : base(dataContext) { }
         
-        private void SetFields(Request original, Request updated)
-        {
-            original.Frequency = updated.Frequency;
-            original.UrgencyLevel = updated.UrgencyLevel;
-            original.IsRelevant = updated.IsRelevant;
-            original.Description = updated.Description;
-            original.HelpKind = updated.HelpKind;
-            original.Preferences = updated.Preferences;
-        }
+      
     }
 }
