@@ -10,9 +10,7 @@ namespace Leyadech.Core.Entities
     {
         [Key]
         public int VolunteeringId { get; set; }
-        [ForeignKey("Request")]
         public int RequestId { get; set; }
-        [ForeignKey("Suggest")]
         public int SuggestId { get; set; }
         public string? Description { get; set; }
         public EHelpKind? HelpKind { get; set; }

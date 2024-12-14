@@ -7,8 +7,8 @@ namespace Leyadech.Core.Entities
     public class Application
     {
         [Key]
+        [ForeignKey("RequestId,SuggestId")]
         public int ApplicationId { get; set; }
-        [ForeignKey("User")]
         public int UserId { get; set; }
         public EHelpKind? HelpKind { get; set; }
         public string? Description { get; set; }
