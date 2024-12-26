@@ -51,7 +51,9 @@ namespace Leyadech.Data.Migrations
 
                     b.HasKey("ApplicationId");
 
-                    b.ToTable("Aplication");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Aplication", (string)null);
 
                     b.HasDiscriminator<string>("ApplicationType").HasValue("Application");
                 });
@@ -88,7 +90,7 @@ namespace Leyadech.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("User", (string)null);
 
                     b.HasDiscriminator<string>("UserType").HasValue("User");
                 });
@@ -100,6 +102,9 @@ namespace Leyadech.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VolunteeringId"), 1L, 1);
+
+                    b.Property<int?>("ApplicationId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("DateEnd")
                         .HasColumnType("datetime2");
@@ -133,7 +138,13 @@ namespace Leyadech.Data.Migrations
 
                     b.HasKey("VolunteeringId");
 
-                    b.ToTable("Volunteering");
+                    b.HasIndex("ApplicationId");
+
+                    b.HasIndex("RequestId");
+
+                    b.HasIndex("SuggestId");
+
+                    b.ToTable("Volunteering", (string)null);
                 });
 
             modelBuilder.Entity("Leyadech.Core.Entities.Mother", b =>
@@ -161,7 +172,7 @@ namespace Leyadech.Data.Migrations
                     b.Property<int?>("Status")
                         .HasColumnType("int");
 
-                    b.ToTable("User");
+                    b.ToTable("User", (string)null);
 
                     b.HasDiscriminator().HasValue("Mother");
                 });
@@ -179,7 +190,7 @@ namespace Leyadech.Data.Migrations
                     b.Property<int>("UrgencyLevel")
                         .HasColumnType("int");
 
-                    b.ToTable("Aplication");
+                    b.ToTable("Aplication", (string)null);
 
                     b.HasDiscriminator().HasValue("Request");
                 });
@@ -198,7 +209,7 @@ namespace Leyadech.Data.Migrations
                     b.Property<string>("RelevantDays")
                         .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Aplication");
+                    b.ToTable("Aplication", (string)null);
 
                     b.HasDiscriminator().HasValue("Suggest");
                 });
@@ -214,9 +225,53 @@ namespace Leyadech.Data.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Volunteer_Status");
 
-                    b.ToTable("User");
+                    b.ToTable("User", (string)null);
 
                     b.HasDiscriminator().HasValue("Volunteer");
+                });
+
+            modelBuilder.Entity("Leyadech.Core.Entities.Application", b =>
+                {
+                    b.HasOne("Leyadech.Core.Entities.User", "User")
+                        .WithMany("Applications")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Leyadech.Core.Entities.Volunteering", b =>
+                {
+                    b.HasOne("Leyadech.Core.Entities.Application", null)
+                        .WithMany("Volunteerings")
+                        .HasForeignKey("ApplicationId");
+
+                    b.HasOne("Leyadech.Core.Entities.Application", "Request")
+                        .WithMany()
+                        .HasForeignKey("RequestId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Leyadech.Core.Entities.Application", "Suggest")
+                        .WithMany()
+                        .HasForeignKey("SuggestId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Request");
+
+                    b.Navigation("Suggest");
+                });
+
+            modelBuilder.Entity("Leyadech.Core.Entities.Application", b =>
+                {
+                    b.Navigation("Volunteerings");
+                });
+
+            modelBuilder.Entity("Leyadech.Core.Entities.User", b =>
+                {
+                    b.Navigation("Applications");
                 });
 #pragma warning restore 612, 618
         }

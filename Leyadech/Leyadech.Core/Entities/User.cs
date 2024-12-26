@@ -15,7 +15,7 @@ namespace Leyadech.Core.Entities
         public string? Email { get; set; }
         public DateOnly? JoinDate { get; set; }
 
-
+        public List<Application>? Applications { get; set; }
 
     }
 }

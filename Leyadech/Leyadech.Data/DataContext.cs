@@ -19,7 +19,7 @@ namespace Leyadech.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.LogTo(mesege => Console.WriteLine(":::"+mesege));
+            optionsBuilder.LogTo(mesege => Console.WriteLine(":::" + mesege));
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,11 +28,11 @@ namespace Leyadech.Data
             {
                 entity.Property(m => m.JoinDate)
                      .HasConversion<DateOnlyConverter, DateOnlyComparer>();
-                entity.HasDiscriminator<string>("UserType")    
-                     .HasValue<User>("User")              
-                     .HasValue<Mother>("Mother")             
+                entity.HasDiscriminator<string>("UserType")
+                     .HasValue<User>("User")
+                     .HasValue<Mother>("Mother")
                      .HasValue<Volunteer>("Volunteer");
-               
+
             });
 
             modelBuilder.Entity<Mother>(entity =>
@@ -54,7 +54,6 @@ namespace Leyadech.Data
             modelBuilder.Entity<Application>(entity =>
             {
                 entity.HasDiscriminator<string>("ApplicationType")
-                    .HasValue<Application>("Application")
                     .HasValue<Request>("Request")
                     .HasValue<Suggest>("Suggest");
             });
@@ -101,6 +100,20 @@ namespace Leyadech.Data
                 entity.Property(v => v.TimeEnd)
                       .HasConversion<TimeOnlyConverter, TimeOnlyComparer>();
             });
+
+            //EF connection
+
+            modelBuilder.Entity<Volunteering>()
+                 .HasOne(v => v.Request) // Relationship for Request
+                 .WithMany()
+                 .HasForeignKey(v => v.RequestId)
+                 .OnDelete(DeleteBehavior.Restrict); // Prevent cascade cycles
+
+            modelBuilder.Entity<Volunteering>()
+                .HasOne(v => v.Suggest) // Relationship for Suggest
+                .WithMany()
+                .HasForeignKey(v => v.SuggestId)
+                .OnDelete(DeleteBehavior.Restrict); // Prevent cascade cycles
         }
 
     }

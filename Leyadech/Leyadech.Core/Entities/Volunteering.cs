@@ -21,5 +21,11 @@ namespace Leyadech.Core.Entities
         public TimeOnly? TimeEnd { get; set; }
         public string? Feedback { get; set; }
 
+        [ForeignKey(nameof(RequestId))]
+        public Application? Request { get; set; }
+
+        [ForeignKey(nameof(SuggestId))]
+        public Application? Suggest { get; set; }
+
     }
 }

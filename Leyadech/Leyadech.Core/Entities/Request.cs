@@ -10,5 +10,6 @@
         public int UrgencyLevel { get; set; }
         public List<string>? Preferences { get; set; }
 
+
     }
 }

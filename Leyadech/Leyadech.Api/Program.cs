@@ -6,6 +6,7 @@ using Leyadech.Data;
 using Leyadech.Data.Repositories;
 using Leyadech.Service;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 using static Leyadech.Data.DataContext;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,8 @@ builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.WriteIndented = true;
     });
 
 var app = builder.Build();
